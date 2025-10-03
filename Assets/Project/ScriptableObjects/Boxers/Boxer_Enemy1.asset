@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103d40809e8292f41972d71a728489fb, type: 3}
+  m_Name: Boxer_Enemy1
+  m_EditorClassIdentifier: Assembly-CSharp::BoxerData
+  id: boxer_enemy1
+  displayName: Oru
+  visual: {fileID: 9070824637963255220, guid: e82f0e247f391d043b411d04f0a3659f, type: 3}
+  health: 35
+  cards:
+  - Jab 1
+  - Jab 1
+  - Jab 2
+  - Jab 2
+  - Jab 2
+  - Hoock 1
+  - Hoock 1
+  - Hoock 2
+  - Hoock 3
+  - Upper 1
+  - Upper 1
+  - Upper 2
+  - Upper 2
+  - Small Health 1
+  - Small Health 2
+  - Health 1
+  - Health 2
+  - Big Health 1
+  - Big Health 2
+  - Big Health 3
+  - Dodge 1
+  - Dodge 1
+  - Dodge 2
+  - Normal Block 1
+  - Normal Block 1
+  - Normal Block 2
+  - Normal Block 2
+  - Simple Block 1
+  - Simple Block 1
+  - Simple Block 2

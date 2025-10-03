@@ -1,0 +1,82 @@
+using System;
+using System.Collections;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class CardView : MonoBehaviour
+{
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI powerText;
+    public TextMeshProUGUI defenseText;
+    public GameObject powerObj;
+    public GameObject defenseObj;
+    public Image visual;
+    public Image bg;
+    public Transform cardFlip;
+    public GameObject backCard;
+    public Shadow[] shadows;
+
+    public Color colorNormal;
+    public Color colorDefense;
+    public Color colorCorner;
+    
+    public void SetupCard(CardData data, bool flipCard = true)
+    {
+        backCard.SetActive(true);
+        visual.sprite = data.visual;
+        cardName.text = data.displayName;
+        powerText.text = data.power.ToString();
+        defenseText.text = data.defense.ToString();
+        defenseObj.SetActive(data.type == CardType.Defense);
+        SetShadow(new Vector2(-5,-5));
+
+        switch (data.type)
+        {
+            case CardType.Health:
+            case CardType.Attack:
+                bg.color = colorNormal;
+                break;
+            case CardType.Defense:
+                bg.color = colorDefense;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        
+        if(flipCard) FlipCard();
+    }
+
+    public void SetShadow(Vector2 distance)
+    {
+        foreach (var t in shadows)
+            t.effectDistance = distance;
+    }
+    
+    public void FlipCard() => StartCoroutine(IE_FlipCard());
+    
+    public IEnumerator IE_FlipCard()
+    {
+        yield return new WaitForSeconds(0.3f);
+        cardFlip.DOLocalRotate(new Vector3(0, 90, 0), 0.1f);
+        yield return new WaitForSeconds(0.1f);
+        backCard.SetActive(false);
+        cardFlip.DOLocalRotate(Vector3.zero, 0.1f);
+    }
+    
+    public void UpdateCardVisuals()
+    {
+        // Atualizar textos com valores atuais do CardController
+        var cardController = GetComponent<CardController>();
+        if (cardController != null)
+        {
+            powerText.text = cardController.power.ToString();
+            defenseText.text = cardController.defense.ToString();
+            
+            // Efeito visual para indicar mudança
+            powerText.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
+            defenseText.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
+        }
+    }
+}
