@@ -18,6 +18,9 @@ public class CardView : MonoBehaviour
     public GameObject backCard;
     public Shadow[] shadows;
 
+    public GameObject attackBG;
+    public GameObject defenseBG;
+    public GameObject healthBG;
     public Color colorNormal;
     public Color colorDefense;
     public Color colorCorner;
@@ -26,7 +29,7 @@ public class CardView : MonoBehaviour
     {
         backCard.SetActive(true);
         visual.sprite = data.visual;
-        cardName.text = data.displayName;
+        cardName.text = data.displayName.ToUpper();
         powerText.text = data.power.ToString();
         defenseText.text = data.defense.ToString();
         defenseObj.SetActive(data.type == CardType.Defense);
@@ -35,11 +38,16 @@ public class CardView : MonoBehaviour
         switch (data.type)
         {
             case CardType.Health:
+                bg.color = colorNormal;
+                healthBG.SetActive(true);
+                break;
             case CardType.Attack:
                 bg.color = colorNormal;
+                attackBG.SetActive(true);
                 break;
             case CardType.Defense:
                 bg.color = colorDefense;
+                defenseBG.SetActive(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

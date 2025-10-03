@@ -15,7 +15,8 @@ public class CardBoxerController : MonoBehaviour
     public void SetupBoxer(BoxerData data, bool subscribeToBattleEvents)
     {
         boxerData = data;
-        cardBoxerView.Setup(data);
+        cardBoxerView.Setup(data,isPlayer);
+
         if (subscribeToBattleEvents) SubscribeToBattleEvents();
     }
 
