@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0257e567b2ebd7e428d1f72a688a0108, type: 3}
   m_Name: Health 2
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  name: Health 2
+  id: Health 2
   displayName: Health
   type: 2
   visual: {fileID: 21300000, guid: dcd304ea43677ab4d99b63f38c46aa95, type: 3}

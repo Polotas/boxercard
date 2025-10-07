@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum DropZoneType
 {
@@ -28,8 +29,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     [SerializeField] private string acceptedTag = "Card";
     [SerializeField] private bool destroyOnDrop = false;
     [SerializeField] private Vector2 snapOffset = Vector2.zero;
-    [SerializeField] private bool resetRotationOnDrop = true; // Resetar rotação quando dropar
-    [SerializeField] private bool centerCardOnDrop = true; // Centralizar carta no drop zone
+    [SerializeField] private bool resetRotationOnDrop = true; 
+    [SerializeField] private bool centerCardOnDrop = true; 
     
     [Header("Effects")]
     [SerializeField] private float pulseScale = 1.05f;
@@ -54,6 +55,13 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public CardController currentCardController;
     public System.Action<GameObject> OnCardDropped;
     
+    public void SetResetRotationOnDrop(bool reset) => resetRotationOnDrop = reset;
+    public void SetCenterCardOnDrop(bool center) => centerCardOnDrop = center;
+    public void SetSnapOffset(Vector2 offset) => snapOffset = offset;
+    public bool GetResetRotationOnDrop() => resetRotationOnDrop;
+    public bool GetCenterCardOnDrop() => centerCardOnDrop;
+    public Vector2 GetSnapOffset() => snapOffset;
+    
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -70,20 +78,17 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         GameObject droppedObject = eventData.pointerDrag;
 
-        if (droppedObject != null)
-        {
-            if (CanAcceptDrop(droppedObject))
-                HighlightDropZone(true);
-            else
-                ShowDeniedEffect(true);
-        }
+        if (droppedObject == null) return;
+        
+        if (CanAcceptDrop(droppedObject))
+            HighlightDropZone(true);
+        else
+            ShowDeniedEffect(true);
     }
     
     public void OnPointerExit(PointerEventData eventData) => HighlightDropZone(false);
 
-    public void OnDrop(PointerEventData eventData)
-    {
-    }
+    public void OnDrop(PointerEventData eventData) { }
 
     private bool CanAcceptDrop(GameObject draggedObject)
     {
@@ -92,23 +97,20 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         var carController = draggedObject.GetComponent<CardController>();
         if (carController.isPlayer != isPlayer && dropZoneType != DropZoneType.AttackTable) return false;
         
-        // Verificar tipos de carta por zona
         switch (dropZoneType)
         {
             case DropZoneType.Defense:
-                // Zona de defesa aceita APENAS cartas de defesa
                 if (carController.data.type != CardType.Defense)
                     return false;
                 break;
                 
             case DropZoneType.AttackTable:
-                // Mesa de ataque aceita cartas de ataque E cartas de cura
-                if (carController.data.type != CardType.Attack && carController.data.type != CardType.Health)
+                if (carController.data.type == CardType.Defense)
                     return false;
                 break;
                 
             case DropZoneType.Corner:
-                // Corner aceita qualquer tipo (mantém comportamento original)
+
                 break;
         }
         
@@ -122,11 +124,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     
     public void HandleDrop(GameObject droppedObject)
     {
-        Debug.Log("CALL HANDLEDROP");
         if (!CanAcceptDrop(droppedObject)) return;
-        
-        Debug.Log("CALL HANDLEDROP PASS");
-        
+
         HighlightDropZone(false);
         droppedObject.transform.SetAsLastSibling();
         
@@ -137,9 +136,7 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         if (carController == null) return;
         
         if (currentCardController != null && currentUIDragHandler != null)
-        {
             ReturnCardToDeck(currentUIDragHandler);
-        }
         
         ShowAcceptEffect();
 
@@ -159,9 +156,7 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
                 
         Image cardImage = droppedObject.GetComponent<Image>();
         if (cardImage != null)
-        {
             cardImage.DOColor(Color.white, animationDuration);
-        }
         
         OnCardDropped?.Invoke(droppedObject);
         
@@ -185,12 +180,17 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             if (carController.data.type == CardType.Attack)
             {
                 Debug.Log("Executando ataque imediato...");
-                StartCoroutine(ExecuteImmediateAttack(droppedObject));
+                StartCoroutine(ExecuteImmediateAttack(carController));
             }
             else if (carController.data.type == CardType.Health)
             {
                 Debug.Log("Executando cura imediata...");
-                StartCoroutine(ExecuteImmediateHealing(droppedObject));
+                StartCoroutine(ExecuteImmediateHealing(carController));
+            }
+            else if (carController.data.type == CardType.Special)
+            {
+                Debug.Log("Executando Especial imediata...");
+                StartCoroutine(ExecuteImmediateSpecial(carController));
             }
             else
             {
@@ -239,13 +239,9 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         if (cardDragHandler == null) return;
         
-        // Marca o card como estando no deck novamente
         cardDragHandler.onDeck = true;
-        
-        // Remove a referência à dropzone atual
         cardDragHandler.currentUiDropZone = null;
         
-        // Adiciona o card de volta ao fan layout na posição original
         var rectCard = cardDragHandler.GetComponent<RectTransform>();
         if (rectCard != null && cardDragHandler.fanLayout != null)
         {
@@ -281,53 +277,31 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             pulseTween.Kill();
     }
     
-    public void SetResetRotationOnDrop(bool reset)
+    private IEnumerator PlayAttackAnimation(GameObject attackCard, IEnumerator endAttack)
     {
-        resetRotationOnDrop = reset;
-    }
-    
-    public void SetCenterCardOnDrop(bool center)
-    {
-        centerCardOnDrop = center;
-    }
-    
-    public void SetSnapOffset(Vector2 offset)
-    {
-        snapOffset = offset;
-    }
-    
-    public bool GetResetRotationOnDrop() => resetRotationOnDrop;
-    public bool GetCenterCardOnDrop() => centerCardOnDrop;
-    public Vector2 GetSnapOffset() => snapOffset;
-    
-    private System.Collections.IEnumerator PlayAttackAnimation(GameObject attackCard)
-    {
-        yield return new WaitForSeconds(attackDelay); // Pausa configurável após o drop
+        yield return new WaitForSeconds(attackDelay);
         
         var cardTransform = attackCard.GetComponent<RectTransform>();
         var originalPosition = cardTransform.anchoredPosition;
         var originalScale = cardTransform.localScale;
         
-        // Encontrar alvos para atacar
         var targets = FindAttackTargets();
         
         if (targets.Count > 0)
         {
-            // Animar ataque para cada alvo
             foreach (var target in targets)
             {
-                yield return StartCoroutine(AnimateAttackToTarget(cardTransform, target, originalPosition, originalScale));
+                yield return StartCoroutine(AnimateAttackToTarget(cardTransform, target, originalPosition, originalScale,endAttack));
                 yield return new WaitForSeconds(0.3f);
             }
         }
         else
         {
-            // Se não há alvos específicos, atacar o adversário diretamente
-            yield return StartCoroutine(AnimateAttackToAdversary(cardTransform, originalPosition, originalScale));
+            yield return StartCoroutine(AnimateAttackToAdversary(cardTransform, originalPosition, originalScale,endAttack));
         }
     }
     
-    private System.Collections.Generic.List<Transform> FindAttackTargets()
+    private List<Transform> FindAttackTargets()
     {
         var targets = new System.Collections.Generic.List<Transform>();
 
@@ -369,7 +343,7 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         return targets;
     }
     
-    private System.Collections.IEnumerator AnimateAttackToTarget(RectTransform attacker, Transform target, Vector2 originalPos, Vector3 originalScale)
+    private IEnumerator AnimateAttackToTarget(RectTransform attacker, Transform target, Vector2 originalPos, Vector3 originalScale, IEnumerator endAttack)
     {
         // Calcular posição do alvo
         var targetPos = target.GetComponent<RectTransform>().anchoredPosition;
@@ -400,6 +374,9 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             }
         });
         
+        //yield return new WaitForSeconds(0.3f);
+        StartCoroutine(endAttack);
+        
         // 4. Retornar à posição original
         sequence.Append(attacker.DOAnchorPos(originalPos, 0.4f).SetEase(Ease.OutBack))
                 .Join(attacker.DOScale(originalScale, 0.4f))
@@ -408,33 +385,27 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         yield return sequence.WaitForCompletion();
     }
     
-    private System.Collections.IEnumerator AnimateAttackToAdversary(RectTransform attacker, Vector2 originalPos, Vector3 originalScale)
+    private IEnumerator AnimateAttackToAdversary(RectTransform attacker, Vector2 originalPos, Vector3 originalScale, IEnumerator endAttack)
     {
-        // Encontrar posição do adversário (centro da tela do lado oposto)
-        var screenCenter = new Vector2(0, 0);
-        var targetPos = isPlayer ? new Vector2(300, 0) : new Vector2(-300, 0); // Lado oposto
+        var targetPos = isPlayer ? new Vector2(300, 0) : new Vector2(-300, 0);
         
-        // Sequência de animação similar, mas atacando o "adversário"
         var sequence = DOTween.Sequence();
         
-        // 1. Preparar ataque
         sequence.Append(attacker.DOScale(originalScale * 1.3f, 0.2f))
                 .Join(attacker.DORotate(new Vector3(0, 0, -15f), 0.2f));
         
-        // 2. Atacar em direção ao adversário
         sequence.Append(attacker.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.InQuad))
                 .Join(attacker.DORotate(new Vector3(0, 0, 20f), 0.4f));
         
-        // 3. Efeito de impacto geral
         sequence.AppendCallback(() => {
-            // Screen shake configurável
             if (enableScreenShake && Camera.main != null)
             {
                 Camera.main.transform.DOShakePosition(0.3f, shakeIntensity);
             }
         });
         
-        // 4. Retornar
+       StartCoroutine(endAttack);
+       
         sequence.Append(attacker.DOAnchorPos(originalPos, 0.5f).SetEase(Ease.OutBack))
                 .Join(attacker.DOScale(originalScale, 0.5f))
                 .Join(attacker.DORotate(Vector3.zero, 0.5f));
@@ -442,14 +413,10 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         yield return sequence.WaitForCompletion();
     }
     
-    private IEnumerator ExecuteImmediateAttack(GameObject attackCard)
+    private IEnumerator ExecuteImmediateAttack(CardController attackCard)
     {
-        var cardController = attackCard.GetComponent<CardController>();
-        if (cardController == null) yield break;
-        
-        yield return StartCoroutine(PlayAttackAnimation(attackCard));
-        yield return StartCoroutine(ProcessImmediateAttackDamage(cardController));
-        yield return StartCoroutine(RemoveAttackCard(cardController));
+        yield return StartCoroutine(PlayAttackAnimation(attackCard.gameObject,ProcessImmediateAttackDamage(attackCard)));
+        yield return StartCoroutine(RemoveCard(attackCard));
     }
     
     private IEnumerator ProcessImmediateAttackDamage(CardController attackCard)
@@ -569,22 +536,23 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
                     
                     battleManager.battleEvents.OnBattleMessage?.Invoke($"{firstDefenseCard.data.displayName} absorve ataque igual! Nova defesa: {currentAttackPower}");
                     Debug.Log($"✓ {firstDefenseCard.data.displayName} absorveu ataque igual - Nova defesa: {currentAttackPower}");
+                    StartCoroutine(DestroyDefenseCard(firstDefenseCard, firstDefenseZone));
                 }
                 
                 // Atualizar visual da carta que sobreviveu
                 yield return StartCoroutine(UpdateDefenseCardVisual(firstDefenseCard));
             }
             
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
         }
         else
         {
             Debug.Log("🎯 Nenhuma carta de defesa encontrada para atacar");
         }
         
-        // Se ainda há dano restante, aplicar à vida do jogador
         if (remainingDamage > 0)
         {
+            if(!target.canDoDamage) yield break;
             target.health = Mathf.Max(0, target.health - remainingDamage);
             battleManager.battleEvents.OnBattleMessage?.Invoke($"{target.name} recebe {remainingDamage} de dano! Vida: {target.health}");
             
@@ -597,64 +565,21 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
                 battleManager.battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
             }
             
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
         }
         else
         {
             battleManager.battleEvents.OnBattleMessage?.Invoke("Ataque foi completamente bloqueado pelas defesas!");
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
-    
-    private IEnumerator RemoveAttackCard(CardController attackCard)
+
+    private IEnumerator ExecuteImmediateHealing(CardController healingCard)
     {
-        if (attackCard == null) yield break;
-        
-        // Limpar referências da zona
-        currentCardController = null;
-        currentUIDragHandler = null;
-        
-        // Animação de desaparecimento
-        var cardTransform = attackCard.GetComponent<RectTransform>();
-        var cardImage = attackCard.GetComponent<Image>();
-        
-        if (cardTransform != null)
-        {
-            cardTransform.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
-            
-            if (cardImage != null)
-            {
-                cardImage.DOFade(0f, 0.3f);
-            }
-            
-            yield return new WaitForSeconds(0.3f);
-        }
-        
-        // Remover carta do deck antes de destruir
-        RemoveCardFromOwnerDeck(attackCard);
-        
-        // Destruir carta
-        if (attackCard != null)
-        {
-            Destroy(attackCard.gameObject);
-        }
-        
-        Debug.Log($"Carta de ataque {attackCard.data.displayName} foi removida após o ataque imediato");
-    }
-    
-    private IEnumerator ExecuteImmediateHealing(GameObject healingCard)
-    {
-        var cardController = healingCard.GetComponent<CardController>();
-        if (cardController == null) 
-        {
-            Debug.LogError("CardController não encontrado na carta de cura!");
-            yield break;
-        }
-        
         Debug.Log($"=== EXECUTANDO CURA IMEDIATA ===");
-        Debug.Log($"Carta: {cardController.data.displayName}");
-        Debug.Log($"Poder de cura: {cardController.power}");
-        Debug.Log($"É do jogador: {cardController.isPlayer}");
+        Debug.Log($"Carta: {healingCard.data.displayName}");
+        Debug.Log($"Poder de cura: {healingCard.power}");
+        Debug.Log($"É do jogador: {healingCard.isPlayer}");
         Debug.Log($"Zona é do jogador: {isPlayer}");
         
         // 1. Pequena pausa após o drop
@@ -662,19 +587,19 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         // 2. Animação de cura
         Debug.Log("Iniciando animação de cura...");
-        yield return StartCoroutine(PlayHealingAnimation(healingCard));
+        yield return StartCoroutine(PlayHealingAnimation(healingCard.gameObject));
         
         // 3. Aplicar cura imediatamente
         Debug.Log("Processando cura...");
-        yield return StartCoroutine(ProcessImmediateHealing(cardController));
+        yield return StartCoroutine(ProcessImmediateHealing(healingCard));
         
         // 4. Remover carta após a cura
         Debug.Log("Removendo carta de cura...");
-        yield return StartCoroutine(RemoveHealingCard(cardController));
+        yield return StartCoroutine(RemoveCard(healingCard));
         
         Debug.Log("=== CURA CONCLUÍDA ===");
     }
-    
+
     private IEnumerator PlayHealingAnimation(GameObject healingCard)
     {
         var cardTransform = healingCard.GetComponent<RectTransform>();
@@ -746,18 +671,58 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         Debug.Log($"{healerName} se curou {actualHealing} pontos. Vida: {oldHealth} → {target.health}");
     }
-    
-    private IEnumerator RemoveHealingCard(CardController healingCard)
+
+    private IEnumerator ExecuteImmediateSpecial(CardController specialCard)
     {
-        if (healingCard == null) yield break;
+        Debug.Log($"Carta: {specialCard.data.displayName}");
+        Debug.Log($"Poder de cura: {specialCard.power}");
+        Debug.Log($"É do jogador: {specialCard.isPlayer}");
+        Debug.Log($"Zona é do jogador: {isPlayer}");
+        
+        // 1. Pequena pausa após o drop
+        yield return new WaitForSeconds(0.5f);
+        
+        // 2. Animação de cura
+        Debug.Log("Iniciando animação de cura...");
+        yield return StartCoroutine(PlaySpecialAnimation(specialCard));
+        
+        Debug.Log("Removendo carta de cura...");
+        yield return StartCoroutine(RemoveCard(specialCard));
+        
+        Debug.Log("=== Uso do especial concluido ===");
+    }
+    
+    private IEnumerator PlaySpecialAnimation(CardController specialCard)
+    {
+        var cardTransform = specialCard.GetComponent<RectTransform>();
+        if (cardTransform == null) yield break;
+        
+        var originalScale = cardTransform.localScale;
+
+        var sequence = DOTween.Sequence();
+        
+        sequence.Append(cardTransform.DOScale(originalScale * 1.3f, 0.3f).SetEase(Ease.OutQuad));
+        sequence.Join(cardTransform.DOPunchPosition(Vector3.up * 20f, 0.3f, 5, 0.5f));
+        
+        sequence.Append(cardTransform.DOScale(originalScale, 0.2f).SetEase(Ease.InQuad));
+        
+        yield return sequence.WaitForCompletion();
+
+        specialCard.cardSpecials.UseSpecial();
+        yield return new WaitForSeconds(1);
+    }
+    
+    private IEnumerator RemoveCard(CardController card)
+    {
+        if (card == null) yield break;
         
         // Limpar referências da zona
         currentCardController = null;
         currentUIDragHandler = null;
         
         // Animação de desaparecimento com efeito de cura
-        var cardTransform = healingCard.GetComponent<RectTransform>();
-        var cardImage = healingCard.GetComponent<Image>();
+        var cardTransform = card.GetComponent<RectTransform>();
+        var cardImage = card.GetComponent<Image>();
         
         if (cardTransform != null)
         {
@@ -774,15 +739,15 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         
         // Remover carta do deck antes de destruir
-        RemoveCardFromOwnerDeck(healingCard);
+        RemoveCardFromOwnerDeck(card);
         
         // Destruir carta
-        if (healingCard != null)
+        if (card != null)
         {
-            Destroy(healingCard.gameObject);
+            Destroy(card.gameObject);
         }
         
-        Debug.Log($"Carta de cura {healingCard.data.displayName} foi consumida e removida");
+        Debug.Log($"Carta de cura {card.data.displayName} foi consumida e removida");
     }
     
     private IEnumerator DestroyDefenseCard(CardController defenseCard, UIDropZone defenseZone)

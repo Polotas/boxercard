@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 43842059421881743ae5f6437cc86dff
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7255914441236188353
+    second: draw_card_icon_0
+  - first:
+      213: 8594081798853938996
+    second: draw_card_icon_1
+  - first:
+      213: 1895541629832360401
+    second: draw_card_icon_2
+  - first:
+      213: 2869197384558616056
+    second: draw_card_icon_3
+  - first:
+      213: -6599830150967306794
+    second: draw_card_icon_4
+  - first:
+      213: 218752404009140123
+    second: draw_card_icon_5
+  - first:
+      213: -826510859978995001
+    second: draw_card_icon_6
+  - first:
+      213: -5376298554958304421
+    second: draw_card_icon_7
+  - first:
+      213: 6760085488272926270
+    second: draw_card_icon_8
+  - first:
+      213: -1796217005482751639
+    second: draw_card_icon_9
+  - first:
+      213: 7868782867889344743
+    second: draw_card_icon_10
+  - first:
+      213: 5735281064333091697
+    second: draw_card_icon_11
+  - first:
+      213: -2483797173171320545
+    second: draw_card_icon_12
+  - first:
+      213: 7660976845289413003
+    second: draw_card_icon_13
+  - first:
+      213: 375441434638610812
+    second: draw_card_icon_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: draw_card_icon_0
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 786
+        width: 152
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cc8286adbf22b460800000000000000
+      internalID: 7255914441236188353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 95
+        width: 606
+        height: 789
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43fc657dcdf444770800000000000000
+      internalID: 8594081798853938996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_2
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 875
+        width: 32
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d17f1fb1115e4a10800000000000000
+      internalID: 1895541629832360401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_3
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 873
+        width: 83
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fd9811d1df61d720800000000000000
+      internalID: 2869197384558616056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_4
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 632
+        width: 30
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d55ea1f171b864a0800000000000000
+      internalID: -6599830150967306794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_5
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 655
+        width: 32
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9f3ab6072a290300800000000000000
+      internalID: 218752404009140123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_6
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 607
+        width: 190
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ca03fb70c4a784f0800000000000000
+      internalID: -826510859978995001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_7
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 603
+        width: 175
+        height: 227
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5ba349f2fc8365b0800000000000000
+      internalID: -5376298554958304421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_8
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 590
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e36e7c36fe5a0dd50800000000000000
+      internalID: 6760085488272926270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_9
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 554
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9694fa8762e8217e0800000000000000
+      internalID: -1796217005482751639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_10
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 298
+        width: 59
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e05937e358833d60800000000000000
+      internalID: 7868782867889344743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_11
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 453
+        width: 32
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 173299ebdbfc79f40800000000000000
+      internalID: 5735281064333091697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_12
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 308
+        width: 158
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f19010771a7c78dd0800000000000000
+      internalID: -2483797173171320545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_13
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 272
+        width: 30
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b89d7f7e9d1415a60800000000000000
+      internalID: 7660976845289413003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: draw_card_icon_14
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 274
+        width: 183
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c71f891eef5d53500800000000000000
+      internalID: 375441434638610812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      draw_card_icon_0: 7255914441236188353
+      draw_card_icon_1: 8594081798853938996
+      draw_card_icon_10: 7868782867889344743
+      draw_card_icon_11: 5735281064333091697
+      draw_card_icon_12: -2483797173171320545
+      draw_card_icon_13: 7660976845289413003
+      draw_card_icon_14: 375441434638610812
+      draw_card_icon_2: 1895541629832360401
+      draw_card_icon_3: 2869197384558616056
+      draw_card_icon_4: -6599830150967306794
+      draw_card_icon_5: 218752404009140123
+      draw_card_icon_6: -826510859978995001
+      draw_card_icon_7: -5376298554958304421
+      draw_card_icon_8: 6760085488272926270
+      draw_card_icon_9: -1796217005482751639
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,9 +11,10 @@ public class FanLayout : MonoBehaviour
 
     [Header("Animação")]
     [SerializeField] private float animationDuration = 0.5f;
-
+    
     [SerializeField] private List<RectTransform> cards = new List<RectTransform>();
 
+    
     public void AddCard(RectTransform card, int siblingIndex = -1)
     {
         if (cards.Contains(card)) return;

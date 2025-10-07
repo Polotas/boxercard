@@ -4,17 +4,28 @@ public enum CardType
 {
     Attack,
     Defense,
-    Health
+    Health,
+    Special,
+    Corner
+}
+
+public enum SpecialType
+{
+    ExtraCards,
+    ExtraDamage,
+    SuperDefense,
+    DestroyDefense
 }
 
 [CreateAssetMenu(fileName = "NewCard", menuName = "Boxe/Card Data")]
 public class CardData : ScriptableObject
 {
     [Header("Base Info")]
-    public string name;
-    public string displayName;
+    public string id;
+    [TextArea] public string displayName;
     public CardType type;
-
+    public SpecialType special;
+    
     [Header("View")] 
     public Sprite visual;
     

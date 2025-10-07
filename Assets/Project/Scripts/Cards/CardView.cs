@@ -21,6 +21,7 @@ public class CardView : MonoBehaviour
     public GameObject attackBG;
     public GameObject defenseBG;
     public GameObject healthBG;
+    public GameObject specialBG;
     public Color colorNormal;
     public Color colorDefense;
     public Color colorCorner;
@@ -32,6 +33,7 @@ public class CardView : MonoBehaviour
         cardName.text = data.displayName.ToUpper();
         powerText.text = data.power.ToString();
         defenseText.text = data.defense.ToString();
+        powerObj.SetActive(data.power > 0);
         defenseObj.SetActive(data.type == CardType.Defense);
         SetShadow(new Vector2(-5,-5));
 
@@ -48,6 +50,10 @@ public class CardView : MonoBehaviour
             case CardType.Defense:
                 bg.color = colorDefense;
                 defenseBG.SetActive(true);
+                break;
+            case CardType.Special:
+                bg.color = colorNormal;
+                specialBG.SetActive(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

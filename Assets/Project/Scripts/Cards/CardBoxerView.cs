@@ -12,6 +12,9 @@ public class CardBoxerView : MonoBehaviour
     public GameObject blueBG;
     public GameObject redBG;
     
+    public GameObject healFX;
+    public GameObject attackFX;
+    
     public void Setup(BoxerData data, bool isPlayer)
     {
         cardName.text = data.displayName.ToUpper();
@@ -33,11 +36,15 @@ public class CardBoxerView : MonoBehaviour
         
         if (isDamage)
         {
+            attackFX.SetActive(false);
             CardImpactAnimation.PlayDamageImpact(visual);
+            attackFX.SetActive(true);
         }
         else if (isHealing)
         {
+            healFX.SetActive(false);
             CardImpactAnimation.PlayHealingImpact(visual);
+            healFX.SetActive(true);
         }
         
         currentHealth = heath;

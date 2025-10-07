@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(RectTransform))]
 public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
@@ -76,7 +75,6 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
         _cardController = GetComponent<CardController>();
         
-        // Armazena estados originais
         originalPosition = rectTransform.anchoredPosition;
         originalScale = rectTransform.localScale;
         originalRotation = rectTransform.localRotation;
@@ -138,6 +136,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(!DragStatus.canDrag) return;
         isDragging = true;
         currentRotation = 0f; 
         isMoving = true; 
@@ -176,6 +175,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(!DragStatus.canDrag) return;
         currentMousePosition = eventData.position;
         
         Vector2 mousePosition;
@@ -213,6 +213,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!DragStatus.canDrag) return;
         DestroyShadow();
         isDragging = false;
         bool droppedInZone = CheckDropZones(eventData.position);
@@ -291,8 +292,6 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private bool CheckDropZones(Vector2 screenPosition)
     {
-        Debug.Log("Check Drop Zones");
-        
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
         {
             position = screenPosition
@@ -300,27 +299,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         var results = new System.Collections.Generic.List<RaycastResult>();
         graphicRaycaster.Raycast(pointerEventData, results);
-        
-        foreach (var result in results)
-        {
-            UIDropZone dropZone = result.gameObject.GetComponent<UIDropZone>();
-            if (dropZone != null)
-            {
-                // Verifica se pode aceitar o drop (validações básicas)
-                if (_cardController.isPlayer != dropZone.isPlayer || 
-                    (_cardController.data.type != CardType.Defense && dropZone.dropZoneType == DropZoneType.Defense)) 
-                {
-                    return false;
-                }
-                
-                // A lógica de troca de cards agora está no UIDropZone.HandleDrop
-                pointerEventData.pointerDrag = gameObject;
-                dropZone.HandleDrop(gameObject);
-                return true;
-            }
-        }
-        
-        return false;
+
+        return DragStatus.CheckDropZones(screenPosition, gameObject, _cardController, results,pointerEventData);
     }
 
     private void ReturnToOriginalPosition()
@@ -342,6 +322,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void SetShadowAlpha(float alpha)
     {
         shadowAlpha = Mathf.Clamp01(alpha);
+        
         if (shadowCanvasGroup != null)
                 shadowCanvasGroup.alpha = shadowAlpha;
     }
@@ -361,13 +342,10 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         shadowOffset = offset;
         if (shadowClone == null) return;
+        
         RectTransform shadowRect = shadowClone.GetComponent<RectTransform>();
         
         if (shadowRect != null)
             shadowRect.anchoredPosition = originalPosition + shadowOffset;
     }
-
-    public Quaternion GetOriginalRotation() => originalRotation;
-    public Vector2 GetOriginalPosition() => originalPosition;
-    public Vector3 GetOriginalScale() => originalScale;
 }

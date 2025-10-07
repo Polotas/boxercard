@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0257e567b2ebd7e428d1f72a688a0108, type: 3}
   m_Name: Normal Block 3
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  name: Block 3
+  id: Block 3
   displayName: Block
   type: 1
   visual: {fileID: 21300000, guid: 4f27b8798720e7e4f9d3ca78a7c6b6a0, type: 3}

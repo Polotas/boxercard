@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class DeckController : MonoBehaviour
 {
@@ -10,16 +9,22 @@ public class DeckController : MonoBehaviour
     public int maxHealth = 30;
     public int health = 100;
 
+    public BattleManager battleManager;
     public CardBoxerController cardBoxerController;
     public DeckCards deckCards;
     public List<string> cards;
     public List<CardData> currentCards;
+    public List<GameObject> cardsObj;
+
+    public bool canDoDamage = true;
     
     private CardsManager _cardsManager;
 
     private void Awake()
     {
         _cardsManager = FindFirstObjectByType<CardsManager>();
+        battleManager = FindFirstObjectByType<BattleManager>();
+        battleManager.battleEvents.OnTurnChanged += ChangeTurn;
     }
 
     public void SetupBoxer(BoxerData data)
@@ -42,6 +47,17 @@ public class DeckController : MonoBehaviour
         }
     }
 
+    public void GetExtrasCards(int quantity) => StartCoroutine(IE_GetExtraCards(quantity));
+
+    private IEnumerator IE_GetExtraCards(int quantity) 
+    {
+        for (int i = 0; i < quantity; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            SpawnCard();
+        }
+    }
+
     public void SpawnCard()
     {
         if (currentCards.Count > 0)
@@ -57,21 +73,23 @@ public class DeckController : MonoBehaviour
     
     public void RemoveCardFromDeck(CardData cardToRemove)
     {
-        // Remove a primeira ocorrência da carta do deck
         for (int i = 0; i < currentCards.Count; i++)
         {
-            if (currentCards[i].name == cardToRemove.name)
+            if (currentCards[i].id == cardToRemove.id)
             {
                 currentCards.RemoveAt(i);
-                Debug.Log($"Carta {cardToRemove.displayName} removida do deck de {name}. Cartas restantes: {currentCards.Count}");
+                cardsObj[2].SetActive(currentCards.Count >= 15);
+                cardsObj[1].SetActive(currentCards.Count >= 10);
+                cardsObj[0].SetActive(currentCards.Count > 0);
                 return;
             }
         }
+        
         Debug.LogWarning($"Carta {cardToRemove.displayName} não encontrada no deck de {name}");
     }
-    
-    public int GetRemainingCardsCount()
+
+    private void ChangeTurn(GameTurn turn)
     {
-        return currentCards.Count;
+        canDoDamage = true;
     }
 }

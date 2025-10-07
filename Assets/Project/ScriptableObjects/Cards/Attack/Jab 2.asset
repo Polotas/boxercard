@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0257e567b2ebd7e428d1f72a688a0108, type: 3}
   m_Name: Jab 2
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  name: Jab 2
+  id: Jab 2
   displayName: Jab
   type: 0
   visual: {fileID: 21300000, guid: e4bd38ab463a8be4cacdd98c9befe722, type: 3}

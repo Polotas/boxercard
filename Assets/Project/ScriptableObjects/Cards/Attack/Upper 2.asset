@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0257e567b2ebd7e428d1f72a688a0108, type: 3}
   m_Name: Upper 2
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  name: Upper 2
+  id: Upper 2
   displayName: Upper
   type: 0
   visual: {fileID: 21300000, guid: 2a1d4ea056f4c0743a11a233c431f609, type: 3}

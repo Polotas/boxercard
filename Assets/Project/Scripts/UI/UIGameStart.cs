@@ -7,8 +7,10 @@ public class UIGameStart : MonoBehaviour
     public GameObject objCanvasGame;
     public Button buttonStart;
     public Animator animationUI;
-
+    public Animator animationGamePlayUI;
+    
     public BoxerData playerData;
+    
     [Header("Boxers")] 
     public PlayerController playerController;
     public AdversaryController adversaryController;
@@ -36,7 +38,8 @@ public class UIGameStart : MonoBehaviour
     {
         animationUI.Play("Game_Start_Exit");
         
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.6f);
+        animationGamePlayUI.Play("GamePlay");
         objCanvasGame.SetActive(true);
         playerController.StartGame(playerData);
         adversaryController.StartGame(_boxerDataAdversary);

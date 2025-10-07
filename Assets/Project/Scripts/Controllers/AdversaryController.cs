@@ -801,7 +801,7 @@ public class AdversaryController : DeckController
             var cardController = cardTransform.GetComponent<CardController>();
             if (cardController != null && cardController.data != null)
             {
-                if (cardController.data.name == targetCard.name || 
+                if (cardController.data.id == targetCard.id || 
                     cardController.data.displayName == targetCard.displayName)
                 {
                     Debug.Log($"✅ Carta {targetCard.displayName} encontrada na mão!");

@@ -5,7 +5,8 @@ public class CardController : MonoBehaviour
     public bool isPlayer;
     public CardData data;
     public CardView cardView;
-
+    public CardSpecials cardSpecials;
+    
     public int power;
     public int defense;
 
@@ -15,6 +16,7 @@ public class CardController : MonoBehaviour
         power = data.power;
         defense = data.defense;
         cardView.SetupCard(_data,flipCard);
+        cardSpecials.Setup(this);
         isPlayer = player;
     }
 }

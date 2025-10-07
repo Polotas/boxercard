@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0257e567b2ebd7e428d1f72a688a0108, type: 3}
   m_Name: Simple Block 1
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  name: Simple Block 1
-  displayName: S. Block
+  id: Simple Block 1
+  displayName: 'Simple
+
+    Block'
   type: 1
+  special: 0
   visual: {fileID: 21300000, guid: 94157b8f4250638419f8671655fe8384, type: 3}
   power: 2
   defense: 10

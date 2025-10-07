@@ -45,8 +45,11 @@ public class BattleManager : MonoBehaviour
     
     [Header("Events")]
     public BattleEvents battleEvents = new BattleEvents();
-    
     private bool isBattleActive = false;
+    
+    public bool IsBattleActive() => isBattleActive;
+    public GameTurn GetCurrentTurn() => gameTurn;
+    public BattlePhase GetCurrentPhase() => currentPhase;
     
     private void Start()
     {
@@ -63,14 +66,13 @@ public class BattleManager : MonoBehaviour
         battleEvents.OnTurnChanged?.Invoke(gameTurn);
         battleEvents.OnPhaseChanged?.Invoke(currentPhase);
         battleEvents.OnBattleMessage?.Invoke("Batalha iniciada! Turno do Jogador");
-        
         Debug.Log("Batalha iniciada!");
     }
     
     public void EndPlayerTurn()
     {
         if (!isBattleActive || gameTurn != GameTurn.Player) return;
-        
+        DragStatus.canDrag = false;
         Debug.Log("Fim do turno do jogador");
         battleEvents.OnBattleMessage?.Invoke("Fim do turno do jogador");
         
@@ -88,7 +90,7 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(phaseTransitionDelay);
         
         // Adversário joga
-        yield return StartCoroutine(AdversaryTurn());
+        yield return StartCoroutine(NextTurn(false));
         
         // Fase de Combate
         currentPhase = BattlePhase.Combat;
@@ -110,31 +112,47 @@ public class BattleManager : MonoBehaviour
         StartNextPlayerTurn();
     }
     
-    private IEnumerator AdversaryTurn()
+    private IEnumerator NextTurn(bool isPlayer)
     {
+        gameTurn = isPlayer ? GameTurn.Player : GameTurn.Adversary;
         currentPhase = BattlePhase.Action;
-        battleEvents.OnPhaseChanged?.Invoke(currentPhase);
-        battleEvents.OnBattleMessage?.Invoke("Turno do Adversário");
         
-        // Adversário ganha uma carta no início do seu turno
-        if (adversaryController.currentCards.Count > 0)
+        battleEvents.OnTurnChanged?.Invoke(gameTurn);
+        battleEvents.OnPhaseChanged?.Invoke(currentPhase);
+      //  battleEvents.OnBattleMessage?.Invoke("Seu turno! Coloque suas cartas nas zonas");
+        
+        battleEvents.OnPhaseChanged?.Invoke(currentPhase);
+       // battleEvents.OnBattleMessage?.Invoke("Turno do Adversário");
+
+        if (isPlayer)
         {
-            adversaryController.SpawnCard();
-            battleEvents.OnBattleMessage?.Invoke("Adversário recebeu uma nova carta!");
-            Debug.Log("Adversário recebeu uma carta do deck no início do turno");
-            yield return new WaitForSeconds(0.5f);
+            if (playerController.currentCards.Count > 0)
+            {
+                playerController.SpawnCard();
+                battleEvents.OnBattleMessage?.Invoke("Você recebeu uma nova carta!");
+            }
+            DragStatus.canDrag = true;
         }
         else
         {
-            Debug.LogWarning("Adversário não tem mais cartas no deck");
+            
+            if (adversaryController.currentCards.Count > 0)
+            {
+                adversaryController.SpawnCard();
+                battleEvents.OnBattleMessage?.Invoke("Adversário recebeu uma nova carta!");
+                Debug.Log("Adversário recebeu uma carta do deck no início do turno");
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                Debug.LogWarning("Adversário não tem mais cartas no deck");
+            } 
         }
         
-        // IA do adversário
-        yield return StartCoroutine(adversaryController.PlayTurn());
-        
+        if(!isPlayer) yield return StartCoroutine(adversaryController.PlayTurn());
         yield return new WaitForSeconds(phaseTransitionDelay);
     }
-    
+
     private IEnumerator ResolveCombat()
     {
         Debug.Log("=== RESOLUÇÃO DE COMBATE ===");
@@ -467,7 +485,7 @@ public class BattleManager : MonoBehaviour
         return false;
     }
 
-    private void StartNextPlayerTurn() => StartCoroutine(IE_StartNextPlayerTurn());
+    private void StartNextPlayerTurn() => StartCoroutine(NextTurn(true));
 
     private IEnumerator IE_StartNextPlayerTurn()
     {
@@ -477,10 +495,10 @@ public class BattleManager : MonoBehaviour
         battleEvents.OnTurnChanged?.Invoke(gameTurn);
         battleEvents.OnPhaseChanged?.Invoke(currentPhase);
         battleEvents.OnBattleMessage?.Invoke("Seu turno! Coloque suas cartas nas zonas");
-        
+
         yield return new WaitForSeconds(phaseTransitionDelay);
+        DragStatus.canDrag = true;
         
-        // Jogador ganha uma carta no início do seu turno (após turno do adversário)
         if (playerController.currentCards.Count > 0)
         {
             playerController.SpawnCard();
@@ -495,8 +513,29 @@ public class BattleManager : MonoBehaviour
         // Esta função será chamada quando as dropzones forem inicializadas
         // Por enquanto deixamos vazia, mas pode ser usada para conectar eventos
     }
+
+    public void GetExtrasCards(bool isPlayer, int quantity)
+    {
+        if (isPlayer)
+        {
+            playerController.GetExtrasCards(quantity);
+        }
+        else
+        {
+            adversaryController.GetExtrasCards(quantity);
+        }
+    }
     
-    public bool IsBattleActive() => isBattleActive;
-    public GameTurn GetCurrentTurn() => gameTurn;
-    public BattlePhase GetCurrentPhase() => currentPhase;
+    public void SuperDefense(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            playerController.canDoDamage = false;
+        }
+        else
+        {
+            adversaryController.canDoDamage = false;
+        }
+    }
+
 }
