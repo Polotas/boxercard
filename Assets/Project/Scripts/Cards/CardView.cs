@@ -81,14 +81,12 @@ public class CardView : MonoBehaviour
     
     public void UpdateCardVisuals()
     {
-        // Atualizar textos com valores atuais do CardController
         var cardController = GetComponent<CardController>();
         if (cardController != null)
         {
             powerText.text = cardController.power.ToString();
             defenseText.text = cardController.defense.ToString();
             
-            // Efeito visual para indicar mudança
             powerText.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
             defenseText.transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
         }

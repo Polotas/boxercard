@@ -84,7 +84,6 @@
             </e>
             <e p="Controllers" t="Include">
               <e p="AdversaryController.cs" t="Include" />
-              <e p="BattleManager.cs" t="Include" />
               <e p="DeckController.cs" t="Include" />
               <e p="PlayerController.cs" t="Include" />
             </e>
@@ -94,9 +93,12 @@
             </e>
             <e p="DeckCards.cs" t="Include" />
             <e p="DragStatus.cs" t="Include" />
+            <e p="Init.cs" t="Include" />
             <e p="Manager" t="Include">
+              <e p="BattleManager.cs" t="Include" />
               <e p="BoxerManager.cs" t="Include" />
               <e p="CardsManager.cs" t="Include" />
+              <e p="GameManager.cs" t="Include" />
             </e>
             <e p="UI" t="Include">
               <e p="FanLayout.cs" t="Include" />
@@ -104,6 +106,12 @@
               <e p="UIDropZone.cs" t="Include" />
               <e p="UIGamePlay.cs" t="Include" />
               <e p="UIGameStart.cs" t="Include" />
+              <e p="UIHome.cs" t="Include" />
+            </e>
+            <e p="Util" t="Include">
+              <e p="LoadingScreen.cs" t="Include" />
+              <e p="Singleton.cs" t="Include" />
+              <e p="UITransition.cs" t="Include" />
             </e>
           </e>
         </e>

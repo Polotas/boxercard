@@ -3,68 +3,17 @@
   <component name="ChangeListManager">
     <list default="true" id="c3e1c0fc-d2dc-4001-b075-92ee8deecbf2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/NextTurn.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/NextTurn.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/card_back_100.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/card_back_100.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/gloves_clashing_icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/gloves_clashing_icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/heart.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/heart.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_heart_simple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_heart_simple.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_shield_simple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_shield_simple.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_sword_simple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/icon_sword_simple.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/vs_icon_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/vs_icon_1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/vs_icon_simple_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/vs_icon_simple_2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 3.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Hoock 3.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Jab 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Jab 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Jab 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Jab 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Upper 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Upper 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Upper 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Attack/Upper 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Dodge 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Dodge 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Dodge 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Dodge 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 3.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Normal Block 3.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Simple Block 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Simple Block 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Simple Block 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Block/Simple Block 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 3.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Big Health 3.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Health 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Health 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Health 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Health 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Small Health 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Small Health 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Small Health 2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Health/Small Health 2.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/GamePlay.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/GamePlay.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/boxer_japanese_no_helmet.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/boxer_japanese_no_helmet.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/boxer_stronger_bald_darker.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/boxer_stronger_bald_darker.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/SampleScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/SampleScene.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Data/CardData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Data/CardData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ProjectSettings/UISoftMaskProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ProjectSettings/UISoftMaskProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +32,9 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/Util/UITransition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/UI/UIHome.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/DragStatus.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -100,10 +52,16 @@
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/CardData.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIHome.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Util/UITransition.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Init.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Util/LoadingScreen.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="33XzAJUQuQ422e8sbgMMXiHw3Bd" />
@@ -147,7 +105,8 @@
       <updated>1759478061605</updated>
       <workItem from="1759478064482" duration="14886000" />
       <workItem from="1759649698502" duration="8167000" />
-      <workItem from="1759839380344" duration="3072000" />
+      <workItem from="1759839380344" duration="3670000" />
+      <workItem from="1760003286814" duration="7369000" />
     </task>
     <servers />
   </component>
@@ -171,19 +130,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs</url>
-          <line>377</line>
-          <properties documentPath="C:\Users\afons\OneDrive\Unity\Projectos\boxercard\Assets\Project\Scripts\Controllers\BattleManager.cs" initialLine="361" containingFunctionPresentation="method 'ApplyDamage'">
-            <startOffsets>
-              <option value="13621" />
-            </startOffsets>
-            <endOffsets>
-              <option value="13652" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs</url>
           <line>44</line>

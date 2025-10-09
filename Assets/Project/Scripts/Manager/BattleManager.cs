@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using DG.Tweening;
+using OneGear.UI.Utility;
 
 public enum GameTurn
 {
@@ -50,11 +51,10 @@ public class BattleManager : MonoBehaviour
     public bool IsBattleActive() => isBattleActive;
     public GameTurn GetCurrentTurn() => gameTurn;
     public BattlePhase GetCurrentPhase() => currentPhase;
-    
-    private void Start()
+
+    private void Awake()
     {
-        // Subscrever aos eventos de drop das zonas
-        SubscribeToDropZoneEvents();
+        UITransition.Instance.CallTransition(TRANSITIONS.FULL_TO_NULL);
     }
     
     public void StartBattle()
@@ -119,11 +119,9 @@ public class BattleManager : MonoBehaviour
         
         battleEvents.OnTurnChanged?.Invoke(gameTurn);
         battleEvents.OnPhaseChanged?.Invoke(currentPhase);
-      //  battleEvents.OnBattleMessage?.Invoke("Seu turno! Coloque suas cartas nas zonas");
-        
-        battleEvents.OnPhaseChanged?.Invoke(currentPhase);
-       // battleEvents.OnBattleMessage?.Invoke("Turno do Adversário");
 
+        yield return new WaitForSeconds(1f);
+      
         if (isPlayer)
         {
             if (playerController.currentCards.Count > 0)
@@ -135,7 +133,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            
+                
             if (adversaryController.currentCards.Count > 0)
             {
                 adversaryController.SpawnCard();
@@ -486,33 +484,6 @@ public class BattleManager : MonoBehaviour
     }
 
     private void StartNextPlayerTurn() => StartCoroutine(NextTurn(true));
-
-    private IEnumerator IE_StartNextPlayerTurn()
-    {
-        gameTurn = GameTurn.Player;
-        currentPhase = BattlePhase.Action;
-        
-        battleEvents.OnTurnChanged?.Invoke(gameTurn);
-        battleEvents.OnPhaseChanged?.Invoke(currentPhase);
-        battleEvents.OnBattleMessage?.Invoke("Seu turno! Coloque suas cartas nas zonas");
-
-        yield return new WaitForSeconds(phaseTransitionDelay);
-        DragStatus.canDrag = true;
-        
-        if (playerController.currentCards.Count > 0)
-        {
-            playerController.SpawnCard();
-            battleEvents.OnBattleMessage?.Invoke("Você recebeu uma nova carta!");
-        }
-        
-        Debug.Log("Novo turno do jogador iniciado - carta adicionada");
-    }
-    
-    private void SubscribeToDropZoneEvents()
-    {
-        // Esta função será chamada quando as dropzones forem inicializadas
-        // Por enquanto deixamos vazia, mas pode ser usada para conectar eventos
-    }
 
     public void GetExtrasCards(bool isPlayer, int quantity)
     {
