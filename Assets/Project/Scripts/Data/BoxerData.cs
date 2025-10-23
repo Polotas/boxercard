@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,15 +6,19 @@ using UnityEngine;
 public class BoxerData : ScriptableObject
 {
     [Header("Base Info")]
-    public string id;
-    public string displayName;
-    
-    [Header("View")] 
-    public Sprite visual;
-    
+    public BoxerInfo boxerInfo;
+
     [Header("Stats")]
     public int health;
 
     [Header("Cards")] 
     public List<string> cards;
+}
+
+[Serializable]
+public class BoxerInfo
+{   
+    public string id;
+    public string displayName;
+    public Sprite visual;
 }

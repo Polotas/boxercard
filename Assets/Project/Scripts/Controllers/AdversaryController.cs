@@ -30,8 +30,12 @@ public class AdversaryController : DeckController
         public float healthPercentage;
         public int playerAttackThreat;
     }
-    
-    public void StartGame(BoxerData data) => SetupBoxer(data);
+
+    public void StartGame(BoxerData data)
+    {
+        cards = data.cards;
+        SetupBoxer(data);
+    } 
     
     public IEnumerator PlayTurn()
     {

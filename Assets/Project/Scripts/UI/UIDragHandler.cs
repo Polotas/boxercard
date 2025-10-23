@@ -67,6 +67,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         rectTransform = GetComponent<RectTransform>();
         
         var gos = GameObject.FindGameObjectsWithTag("CanvasGameplay"); 
+        if(gos.Length < 1) return;
         
         canvas = gos[0].GetComponent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();

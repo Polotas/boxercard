@@ -28,14 +28,18 @@ public class CardView : MonoBehaviour
     
     public void SetupCard(CardData data, bool flipCard = true)
     {
-        backCard.SetActive(true);
-        visual.sprite = data.visual;
+        if(backCard != null) backCard.SetActive(true);
+        if(visual != null) visual.sprite = data.visual;
         cardName.text = data.displayName.ToUpper();
         powerText.text = data.power.ToString();
         defenseText.text = data.defense.ToString();
-        powerObj.SetActive(data.power > 0);
+        powerObj.SetActive(false);
         defenseObj.SetActive(data.type == CardType.Defense);
+        powerObj.SetActive(data.type != CardType.Special);
         SetShadow(new Vector2(-5,-5));
+        RectTransform rt = cardName.GetComponent<RectTransform>();
+        Vector2 offsetMin = rt.offsetMin; 
+        Vector2 offsetMax = rt.offsetMax; 
 
         switch (data.type)
         {
@@ -52,12 +56,16 @@ public class CardView : MonoBehaviour
                 defenseBG.SetActive(true);
                 break;
             case CardType.Special:
+                offsetMin.x = 10;
                 bg.color = colorNormal;
                 specialBG.SetActive(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        rt.offsetMin = offsetMin;
+        rt.offsetMax = offsetMax;
         
         if(flipCard) FlipCard();
     }

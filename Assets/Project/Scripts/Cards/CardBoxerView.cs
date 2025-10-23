@@ -17,8 +17,8 @@ public class CardBoxerView : MonoBehaviour
     
     public void Setup(BoxerData data, bool isPlayer)
     {
-        cardName.text = data.displayName.ToUpper();
-        visual.sprite = data.visual;
+        cardName.text = data.boxerInfo.displayName.ToUpper();
+        visual.sprite = data.boxerInfo.visual;
         currentHealth = data.health;
         UpdateHealthValor(data.health);
         blueBG.SetActive(isPlayer);

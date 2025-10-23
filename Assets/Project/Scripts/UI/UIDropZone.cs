@@ -168,6 +168,12 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         if (dragHandler)
             dragHandler.currentUiDropZone = this;
         
+        // Registrar última defesa jogada para Mirror Guard
+        if (dropZoneType == DropZoneType.Defense && carController != null)
+        {
+            battleManager.SetLastDefensePlayed(isPlayer, carController.data);
+        }
+
         // Se é uma carta dropada na mesa de ataque, executar ação baseada no tipo
         if (dropZoneType == DropZoneType.AttackTable)
         {
@@ -443,9 +449,30 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         int attackPower = attackCard.power;
         int remainingDamage = attackPower;
         
+        // Buffs/efeitos de lado
+        var attackerState = battleManager.GetState(attackCard.isPlayer);
+        var defenderState = battleManager.GetState(!attackCard.isPlayer);
+        
+        // Focus: dobra o poder da PRÓXIMA carta
+        if (attackerState.focusDoubleNextCard)
+        {
+            attackPower *= 2;
+            attackerState.focusDoubleNextCard = false;
+        }
+        
+        // AdrenalineRush/Overcharge: bônus cumulativo no turno
+        attackPower += attackerState.attackPowerBonus;
+        
         // Notificar sobre o ataque
         battleManager.battleEvents.OnBattleMessage?.Invoke($"{attackerName} ataca com {attackCard.data.displayName} (Poder: {attackPower})!");
         yield return new WaitForSeconds(0.5f);
+
+        // FEINT: não causa dano; aplica debuff na próxima defesa do oponente
+        if (attackCard.data.id == "Feint")
+        {
+            battleManager.ApplyFeintToOpponent(attackCard.isPlayer);
+            remainingDamage = 0;
+        }
         
         // Obter zonas de defesa do alvo
         UIDropZone[] targetDefenses = null;
@@ -454,6 +481,9 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         else if (target == battleManager.adversaryController)
             targetDefenses = battleManager.adversaryController.defenses;
         
+        // Precision: ignorar primeira defesa
+        bool ignoreFirstDefense = attackerState.precisionIgnoreFirstDefenseThisTurn;
+
         // Encontrar APENAS A PRIMEIRA carta de defesa para atacar
         UIDropZone firstDefenseZone = null;
         CardController firstDefenseCard = null;
@@ -465,10 +495,15 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
                 if (defenseZone.currentCardController != null && 
                     defenseZone.currentCardController.data.type == CardType.Defense)
                 {
+                    if (ignoreFirstDefense)
+                    {
+                        ignoreFirstDefense = false; // Ignora esta e segue buscando próxima
+                        continue;
+                    }
                     firstDefenseZone = defenseZone;
                     firstDefenseCard = defenseZone.currentCardController;
-                    Debug.Log($"🎯 Primeira defesa encontrada: {firstDefenseCard.data.displayName}");
-                    break; // PARAR na primeira defesa encontrada
+                    Debug.Log($"🎯 Primeira defesa considerada: {firstDefenseCard.data.displayName}");
+                    break; // PARAR na primeira defesa considerada
                 }
             }
         }
@@ -479,6 +514,22 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             int currentAttackPower = remainingDamage;
             int defensePower = firstDefenseCard.power;
             int defenseValue = firstDefenseCard.defense;
+            
+            // Feint: metade da próxima defesa do oponente
+            if (defenderState.halveNextDefenseOnce)
+            {
+                defenseValue = Mathf.CeilToInt(defenseValue * 0.5f);
+                defenderState.halveNextDefenseOnce = false;
+                battleManager.battleEvents.OnBattleMessage?.Invoke("FEINT ativo: defesa reduzida pela metade");
+            }
+            
+            // Body Blow: ignora 50% da defesa
+            if (attackCard.data.id == "Body Blow")
+            {
+                int ignored = Mathf.FloorToInt(defenseValue * 0.5f);
+                defenseValue -= ignored;
+                battleManager.battleEvents.OnBattleMessage?.Invoke($"Body Blow ignora {ignored} de defesa");
+            }
             
             Debug.Log($"=== COMBATE 1v1 ===");
             Debug.Log($"Atacante: {attackCard.data.displayName} (Power: {currentAttackPower})");
@@ -550,6 +601,36 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             Debug.Log("🎯 Nenhuma carta de defesa encontrada para atacar");
         }
         
+        // Efeitos pós-interação com defesa
+        // Counter Punch: dobra dano se sofreu ataque no último turno
+        if (attackCard.data.id == "Counter Punch" && attackerState.wasAttackedLastTurn)
+        {
+            remainingDamage *= 2;
+            attackerState.wasAttackedLastTurn = false; // Consome o estado
+            battleManager.battleEvents.OnBattleMessage?.Invoke("Counter Punch: dano dobrado!");
+        }
+
+        // Flurry: 3 mini-ataques de 3 cada
+        if (attackCard.data.id == "Flurry")
+        {
+            int hits = 3;
+            int perHit = 3;
+            int total = hits * perHit;
+            remainingDamage = total; // Simplificação: aplica total após animação
+            battleManager.battleEvents.OnBattleMessage?.Invoke("Flurry: 3 golpes rápidos!");
+        }
+
+        // Finisher: só causa dano total se alvo <= 30% HP
+        if (attackCard.data.id == "Finisher")
+        {
+            float threshold = target.maxHealth * 0.3f;
+            if (target.health > threshold)
+            {
+                remainingDamage = Mathf.CeilToInt(remainingDamage * 0.5f); // Penaliza quando fora da condição
+                battleManager.battleEvents.OnBattleMessage?.Invoke("Finisher penalizado: alvo acima de 30% de HP");
+            }
+        }
+
         if (remainingDamage > 0)
         {
             if(!target.canDoDamage) yield break;
@@ -564,6 +645,9 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             {
                 battleManager.battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
             }
+            
+            // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
+            battleManager.MarkDamageReceived(target == battleManager.playerController);
             
             yield return new WaitForSeconds(0.2f);
         }

@@ -48,6 +48,23 @@ public class BattleManager : MonoBehaviour
     public BattleEvents battleEvents = new BattleEvents();
     private bool isBattleActive = false;
     
+    [System.Serializable]
+    public class SideState
+    {
+        public int attackPowerBonus; // Buff por turno (Adrenaline Rush, Overcharge)
+        public bool focusDoubleNextCard; // Focus
+        public bool precisionIgnoreFirstDefenseThisTurn; // Precision
+        public int overchargeSelfDamagePending; // Dano ao fim do turno
+        public bool stunnedNextTurn; // Stun
+        public bool wasAttackedLastTurn; // Para Counter Punch
+        public bool halveNextDefenseOnce; // Feint no alvo
+        public CardData lastDefensePlayed; // Para Mirror Guard
+    }
+
+    [Header("Side States")] 
+    public SideState playerState = new SideState();
+    public SideState adversaryState = new SideState();
+    
     public bool IsBattleActive() => isBattleActive;
     public GameTurn GetCurrentTurn() => gameTurn;
     public BattlePhase GetCurrentPhase() => currentPhase;
@@ -122,6 +139,21 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
       
+        // Reset de buffs por turno
+        var state = GetState(isPlayer);
+        state.attackPowerBonus = 0;
+        state.precisionIgnoreFirstDefenseThisTurn = false;
+        state.overchargeSelfDamagePending = Mathf.Max(0, state.overchargeSelfDamagePending); // mantém até cleanup
+
+        // Stun: perder o turno
+        if (state.stunnedNextTurn)
+        {
+            state.stunnedNextTurn = false;
+            battleEvents.OnBattleMessage?.Invoke(isPlayer ? "Jogador está atordoado e perde o turno!" : "Adversário está atordoado e perde o turno!");
+            yield return new WaitForSeconds(phaseTransitionDelay);
+            yield break;
+        }
+
         if (isPlayer)
         {
             if (playerController.currentCards.Count > 0)
@@ -393,6 +425,10 @@ public class BattleManager : MonoBehaviour
         ApplyHealthEffects(playerController);
         ApplyHealthEffects(adversaryController);
         
+        // Aplicar penalidades/efeitos de fim de turno
+        ApplyEndOfTurnEffects(playerController, playerState);
+        ApplyEndOfTurnEffects(adversaryController, adversaryState);
+        
         // Remover cartas usadas (opcional - dependendo das regras do jogo)
         // ClearUsedCards();
         
@@ -497,16 +533,158 @@ public class BattleManager : MonoBehaviour
         }
     }
     
+    public void ExtraDamage(bool isPlayer)
+    {
+        // Placeholder: desativa dano do ALVO até o fim do turno
+        DeckController target = isPlayer ? (DeckController)adversaryController : (DeckController)playerController;
+        target.canDoDamage = false;
+    }
+    
     public void SuperDefense(bool isPlayer)
     {
-        if (isPlayer)
+        // Placeholder: desativa dano RECEBIDO do alvo (mantém sem alteração de cartas)
+        DeckController target = isPlayer ? (DeckController)adversaryController : (DeckController)playerController;
+        target.canDoDamage = false;
+    }
+    
+    public void DestroyDefenses(bool isPlayer)
+    {
+        // Implementação: destrói TODAS as defesas do oponente
+        DeckController target = isPlayer ? (DeckController)adversaryController : (DeckController)playerController;
+        DestroyAllDefenses(target);
+    }
+
+    // ===== Novos utilitários/estados =====
+    public SideState GetState(bool isPlayer) => isPlayer ? playerState : adversaryState;
+
+    public void MarkDamageReceived(bool isPlayer)
+    {
+        var state = GetState(isPlayer);
+        state.wasAttackedLastTurn = true;
+    }
+
+    public void SetLastDefensePlayed(bool isPlayer, CardData data)
+    {
+        var state = GetState(isPlayer);
+        state.lastDefensePlayed = data;
+    }
+
+    public void ApplyAdrenalineRush(bool isPlayer)
+    {
+        GetState(isPlayer).attackPowerBonus += 4;
+        battleEvents.OnBattleMessage?.Invoke(isPlayer ? "+4 Poder de Ataque neste turno (Jogador)" : "+4 Poder de Ataque neste turno (Adversário)");
+    }
+
+    public void ApplyFocus(bool isPlayer)
+    {
+        GetState(isPlayer).focusDoubleNextCard = true;
+        battleEvents.OnBattleMessage?.Invoke("FOCUS: próxima carta terá o dobro de poder");
+    }
+
+    public void ApplyStunToOpponent(bool casterIsPlayer)
+    {
+        GetState(!casterIsPlayer).stunnedNextTurn = true;
+        battleEvents.OnBattleMessage?.Invoke("STUN: oponente perderá o próximo turno");
+    }
+
+    public void ApplyBreakGuardToOpponent(bool casterIsPlayer)
+    {
+        DeckController target = casterIsPlayer ? (DeckController)adversaryController : (DeckController)playerController;
+        DestroyAllDefenses(target);
+    }
+
+    public void ApplyOvercharge(bool isPlayer)
+    {
+        var state = GetState(isPlayer);
+        state.attackPowerBonus += 8;
+        state.overchargeSelfDamagePending += 5;
+        battleEvents.OnBattleMessage?.Invoke("OVERCHARGE: +8 poder neste turno (leva 5 de dano no fim)");
+    }
+
+    public void ApplyPrecision(bool isPlayer)
+    {
+        GetState(isPlayer).precisionIgnoreFirstDefenseThisTurn = true;
+        battleEvents.OnBattleMessage?.Invoke("PRECISION: ignorará a primeira defesa neste turno");
+    }
+
+    public void ApplyFeintToOpponent(bool casterIsPlayer)
+    {
+        GetState(!casterIsPlayer).halveNextDefenseOnce = true;
+        battleEvents.OnBattleMessage?.Invoke("FEINT: próxima defesa do oponente terá 50% de defesa");
+    }
+
+    public void ApplySecondWind(bool isPlayer)
+    {
+        DeckController ctrl = isPlayer ? (DeckController)playerController : (DeckController)adversaryController;
+        int healAmount = Mathf.CeilToInt(ctrl.maxHealth * 0.25f);
+        int old = ctrl.health;
+        ctrl.health = Mathf.Min(ctrl.maxHealth, ctrl.health + healAmount);
+        if (ctrl == playerController) battleEvents.OnPlayerHealthChanged?.Invoke(ctrl.health); else battleEvents.OnAdversaryHealthChanged?.Invoke(ctrl.health);
+        battleEvents.OnBattleMessage?.Invoke($"Second Wind: curou {ctrl.health - old} HP e comprou 1 carta");
+        GetExtrasCards(isPlayer, 1);
+    }
+
+    public void ApplyMirrorGuard(bool casterIsPlayer)
+    {
+        var opponentState = GetState(!casterIsPlayer);
+        if (opponentState.lastDefensePlayed == null)
         {
-            playerController.canDoDamage = false;
+            battleEvents.OnBattleMessage?.Invoke("Mirror Guard: sem defesa do oponente para copiar");
+            return;
         }
-        else
+        var zone = FindFirstEmptyDefenseZone(casterIsPlayer);
+        if (zone == null)
         {
-            adversaryController.canDoDamage = false;
+            battleEvents.OnBattleMessage?.Invoke("Mirror Guard: sem slot de defesa disponível");
+            return;
+        }
+        var spawner = casterIsPlayer ? playerController.deckCards : adversaryController.deckCards;
+        var go = spawner.SpawnCardObject(opponentState.lastDefensePlayed, false, casterIsPlayer);
+        if (go != null)
+        {
+            zone.HandleDrop(go);
+            battleEvents.OnBattleMessage?.Invoke($"Mirror Guard: defesa '{opponentState.lastDefensePlayed.displayName}' copiada");
         }
     }
 
+    private UIDropZone FindFirstEmptyDefenseZone(bool isPlayer)
+    {
+        var zones = isPlayer ? playerController.defenses : adversaryController.defenses;
+        if (zones == null) return null;
+        foreach (var z in zones)
+        {
+            if (z != null && z.currentCardController == null) return z;
+        }
+        return null;
+    }
+
+    private void DestroyAllDefenses(DeckController target)
+    {
+        UIDropZone[] targetDefenses = null;
+        if (target == playerController) targetDefenses = playerController.defenses; else if (target == adversaryController) targetDefenses = adversaryController.defenses;
+        if (targetDefenses == null) return;
+        foreach (var dz in targetDefenses)
+        {
+            if (dz != null && dz.currentCardController != null && dz.currentCardController.data.type == CardType.Defense)
+            {
+                // reutiliza rotina de destruição da UIDropZone (se existir)
+                var card = dz.currentCardController;
+                dz.currentCardController = null;
+                dz.currentUIDragHandler = null;
+                if (card != null) Destroy(card.gameObject);
+            }
+        }
+        battleEvents.OnBattleMessage?.Invoke($"Todas as defesas de {target.name} foram destruídas!");
+    }
+
+    private void ApplyEndOfTurnEffects(DeckController controller, SideState state)
+    {
+        if (state.overchargeSelfDamagePending > 0)
+        {
+            controller.health = Mathf.Max(0, controller.health - state.overchargeSelfDamagePending);
+            if (controller == playerController) battleEvents.OnPlayerHealthChanged?.Invoke(controller.health); else battleEvents.OnAdversaryHealthChanged?.Invoke(controller.health);
+            battleEvents.OnBattleMessage?.Invoke($"Overcharge: {controller.name} sofreu {state.overchargeSelfDamagePending} de dano no fim do turno");
+            state.overchargeSelfDamagePending = 0;
+        }
+    }
 }

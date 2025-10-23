@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103d40809e8292f41972d71a728489fb, type: 3}
   m_Name: Boxer2
   m_EditorClassIdentifier: Assembly-CSharp::BoxerData
-  id: boxer2
-  displayName: Maria
-  visual: {fileID: -8078224510179747336, guid: 67a33ac80a64915419913097b2f32a47, type: 3}
+  boxerInfo:
+    id: boxer02
+    displayName: Maria
+    visual: {fileID: -8078224510179747336, guid: 67a33ac80a64915419913097b2f32a47, type: 3}
   health: 30
   cards: []

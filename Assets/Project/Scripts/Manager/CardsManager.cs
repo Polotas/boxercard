@@ -7,10 +7,9 @@ public class CardsManager : MonoBehaviour
 {
     public List<CardData> cards;
 
-    public List<CardData> GetCards(List<string> cardsName)
+    public List<CardData> GetCards(List<string> cardsName, bool shuffle = true)
     {
         var currentCards = new List<CardData>();
-
         foreach (var t1 in cardsName)
         {
             foreach (var t in cards)
@@ -22,7 +21,9 @@ public class CardsManager : MonoBehaviour
             }
         }
         
-        currentCards = currentCards.OrderBy(x => Random.value).ToList();
+        Debug.Log("DECK CARDS: " + currentCards.Count);
+        
+        if(shuffle) currentCards = currentCards.OrderBy(x => Random.value).ToList();
         
         return currentCards;
     }

@@ -13,8 +13,16 @@ public enum SpecialType
 {
     ExtraCards,
     ExtraDamage,
-    SuperDefense,
-    DestroyDefense
+    Shield,
+    DestroyDefense,
+    AdrenalineRush,
+    Focus,
+    Stun,
+    BreakGuard,
+    Overcharge,
+    MirrorGuard,
+    Precision,
+    SecondWind
 }
 
 [CreateAssetMenu(fileName = "NewCard", menuName = "Boxe/Card Data")]
@@ -22,7 +30,9 @@ public class CardData : ScriptableObject
 {
     [Header("Base Info")]
     public string id;
+    public int maxCards;
     [TextArea] public string displayName;
+    [TextArea] public string description;
     public CardType type;
     public SpecialType special;
     

@@ -41,6 +41,7 @@ public class UIGameStart : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
         animationGamePlayUI.Play("GamePlay");
         objCanvasGame.SetActive(true);
+        playerData.cards = GameManager.Instance.GetListOfCardsDeck(null);
         playerController.StartGame(playerData);
         adversaryController.StartGame(_boxerDataAdversary);
         
