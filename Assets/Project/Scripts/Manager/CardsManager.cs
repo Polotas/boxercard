@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 public class CardsManager : MonoBehaviour
 {
@@ -28,6 +31,8 @@ public class CardsManager : MonoBehaviour
         return currentCards;
     }
     
+#if UNITY_EDITOR
+    
     [ContextMenu("FIND CARDS")]
     public void FindAllCardData()
     {
@@ -50,4 +55,5 @@ public class CardsManager : MonoBehaviour
 
         Debug.Log($"✅ Total de CardData encontrados: {cards.Count}");
     }
+#endif
 }

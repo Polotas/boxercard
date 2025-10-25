@@ -22,7 +22,9 @@ public class GameManager : Singleton<GameManager>
         {
             playerData = ES3.Load<PlayerData>("PlayerSave");
         }
-        
+
+        AudioManager.SetMute(AudioManager.AudioType.BG,playerData.optionsData.soundBGFX);
+        AudioManager.SetMute(AudioManager.AudioType.FX,playerData.optionsData.soundFX);
         hasLoad = true;
     }
 
@@ -47,6 +49,17 @@ public class GameManager : Singleton<GameManager>
         }
         
         return cards;
+    }
+
+    public bool CanAddOrRemoveCard()
+    {
+        foreach (var t in playerData.listBoxerDeckData)
+        {
+            if (t.boxerID != playerData.currentBoxer) continue;
+            return t.listOFCards.Count > 25 && t.listOFCards.Count < 30;
+        }
+        
+        return false;
     }
     
     public List<string> AddCardToDeck(string card)
@@ -84,4 +97,11 @@ public class GameManager : Singleton<GameManager>
         
         return cards;
     }
+}
+
+[Serializable]
+public class OptionData
+{
+    public bool soundBGFX = true;
+    public bool soundFX = true;
 }

@@ -35,6 +35,7 @@ public class UiDeckHomeBoxerDeck : MonoBehaviour
         foreach (var t in cards)
         {
             UiDeckHomeCardView card = Instantiate(prefab, grid, true);
+            card.transform.localScale = Vector3.one;
             card.Setup(t);
             _listDeck.Add(card);
         }

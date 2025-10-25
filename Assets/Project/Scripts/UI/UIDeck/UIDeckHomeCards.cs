@@ -22,6 +22,7 @@ public class UIDeckHomeCards : MonoBehaviour
         foreach (var t in _cardsManager.cards)
         {
             UIDeckHomeCardViewer card = Instantiate(prefab, grid, true);
+            card.transform.localScale = Vector3.one;
             card.Setup(t);
             cards.Add(card);
         }

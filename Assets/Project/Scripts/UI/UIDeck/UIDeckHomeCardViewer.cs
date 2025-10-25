@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class UIDeckHomeCardViewer : MonoBehaviour
     private Vector3 originalScale;
     private Tween hoverScaleTween;
 
+    private GameManager _gameManager;
+    private UIPopup _uiPopup;
+    
     private void Awake()
     {
         _uiMouseEvent.onMouseEnter += Enter;
@@ -31,6 +35,8 @@ public class UIDeckHomeCardViewer : MonoBehaviour
         
         _uiMouseEventInfo.onMouseEnter += EnterInfo;
         _uiMouseEventInfo.onMouseExit += ExitInfo;
+
+        _uiPopup = FindFirstObjectByType<UIPopup>();
         
         if (cardView != null)
         {
@@ -41,7 +47,12 @@ public class UIDeckHomeCardViewer : MonoBehaviour
             originalScale = Vector3.one;
         }
     }
-    
+
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
+
     public void Setup(CardData data)
     {
         objectQuantity.SetActive(false);
@@ -69,12 +80,18 @@ public class UIDeckHomeCardViewer : MonoBehaviour
 
     private void AddCard()
     {
-        GameManager.Instance.AddCardToDeck(cardData.id);
+        if(_gameManager.CanAddOrRemoveCard())
+            _gameManager.AddCardToDeck(cardData.id);
+        else
+            _uiPopup.Open_PopupWarning("You’ve reached the card limit.");
     }
     
     private void RemoveCard()
     {
-        GameManager.Instance.RemoveCardFromDeck(cardData.id);
+        if(_gameManager.CanAddOrRemoveCard())
+            _gameManager.RemoveCardFromDeck(cardData.id);
+        else
+            _uiPopup.Open_PopupWarning("You’re at the minimum card limit");
     }
 
     public void Enter(PointerEventData eventData)

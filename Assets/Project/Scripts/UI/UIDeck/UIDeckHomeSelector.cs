@@ -35,6 +35,7 @@ public class UIDeckHomeSelector : MonoBehaviour
         foreach (var t in _playerDecks.playerBoxers)
         {
             UIDeckHomeBoxer boxer = Instantiate(prefab, grid, true);
+            boxer.transform.localScale = Vector3.one;
             boxer.Setup(t,this);
             _listDeck.Add(boxer);
         }

@@ -6,7 +6,8 @@ public class PlayerData
 {
     public string currentBoxer = "boxer01";
     public List<BoxerDeckData> listBoxerDeckData;
-
+    public OptionData optionsData = new OptionData();
+    
     public PlayerData InitPlayerData()
     {
         this.listBoxerDeckData = new List<BoxerDeckData>();
@@ -16,7 +17,7 @@ public class PlayerData
 
         this.listBoxerDeckData.Add(boxer1);
         this.listBoxerDeckData.Add(boxer2);
-        
+        optionsData = new OptionData();
         return this;
     }
 

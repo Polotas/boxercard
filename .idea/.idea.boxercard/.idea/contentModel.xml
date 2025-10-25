@@ -320,6 +320,7 @@
             <e p="DragStatus.cs" t="Include" />
             <e p="Init.cs" t="Include" />
             <e p="Manager" t="Include">
+              <e p="AudioManager.cs" t="Include" />
               <e p="BattleManager.cs" t="Include" />
               <e p="BoxerManager.cs" t="Include" />
               <e p="CardsManager.cs" t="Include" />
@@ -342,6 +343,8 @@
               <e p="UIGamePlay.cs" t="Include" />
               <e p="UIGameStart.cs" t="Include" />
               <e p="UIHome.cs" t="Include" />
+              <e p="UIOptions.cs" t="Include" />
+              <e p="UIPopup.cs" t="Include" />
               <e p="UISelectBoxer.cs" t="Include" />
             </e>
             <e p="Util" t="Include">
