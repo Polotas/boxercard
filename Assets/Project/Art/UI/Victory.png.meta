@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: ddde1c6e2fb16c444bd7ed1145e54dd3
+guid: 5f5c28094c6fd9b47a24f1e5e587d436
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4403758066796133435
-    second: Boxer_victory_0
+      213: -7642986446173420197
+    second: Victory_0
   - first:
-      213: 7294296858315478014
-    second: Boxer_victory_1
+      213: -1213821068326169202
+    second: Victory_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,45 +142,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boxer_victory_0
+      name: Victory_0
       rect:
         serializedVersion: 2
-        x: 232
-        y: 343
-        width: 563
-        height: 666
+        x: 178
+        y: 584
+        width: 1133
+        height: 336
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c30bdfce55b2e2c0800000000000000
-      internalID: -4403758066796133435
+      spriteID: b5545bc4258aee590800000000000000
+      internalID: -7642986446173420197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boxer_victory_1
+      name: Victory_1
       rect:
         serializedVersion: 2
-        x: 786
-        y: 888
-        width: 8
-        height: 7
+        x: 275
+        y: 17
+        width: 959
+        height: 495
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef35426885c8a3560800000000000000
-      internalID: 7294296858315478014
+      spriteID: e8598816b24a72fe0800000000000000
+      internalID: -1213821068326169202
       vertices: []
       indices: 
       edges: []
@@ -189,7 +189,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5ff346b2b4d8a1c40833a3069db1a7ce
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -199,8 +199,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boxer_victory_0: -4403758066796133435
-      Boxer_victory_1: 7294296858315478014
+      Victory_0: -7642986446173420197
+      Victory_1: -1213821068326169202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

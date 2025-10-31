@@ -1,13 +1,22 @@
 fileFormatVersion: 2
-guid: ddde1c6e2fb16c444bd7ed1145e54dd3
+guid: ee648cd209decb34fb52c0388eeeb463
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4403758066796133435
-    second: Boxer_victory_0
+      213: 6450820471795987887
+    second: Boxer02_defeat_0
   - first:
-      213: 7294296858315478014
-    second: Boxer_victory_1
+      213: 2222710459508029645
+    second: Boxer02_defeat_1
+  - first:
+      213: 8466400874903931023
+    second: Boxer02_defeat_2
+  - first:
+      213: 4750499193368316613
+    second: Boxer02_defeat_3
+  - first:
+      213: 99808747414525987
+    second: Boxer02_defeat_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,13 +151,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boxer_victory_0
+      name: Boxer02_defeat_0
       rect:
         serializedVersion: 2
-        x: 232
-        y: 343
-        width: 563
-        height: 666
+        x: 174
+        y: 212
+        width: 640
+        height: 436
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,30 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c30bdfce55b2e2c0800000000000000
-      internalID: -4403758066796133435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boxer_victory_1
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 888
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ef35426885c8a3560800000000000000
-      internalID: 7294296858315478014
+      spriteID: fa5b73b8a0be58950800000000000000
+      internalID: 6450820471795987887
       vertices: []
       indices: 
       edges: []
@@ -189,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5ff346b2b4d8a1c40833a3069db1a7ce
+    spriteID: f61aa52e394814d4393855170ad3d9c3
     internalID: 0
     vertices: []
     indices: 
@@ -199,8 +186,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boxer_victory_0: -4403758066796133435
-      Boxer_victory_1: 7294296858315478014
+      Boxer02_defeat_0: 6450820471795987887
+      Boxer02_defeat_1: 2222710459508029645
+      Boxer02_defeat_2: 8466400874903931023
+      Boxer02_defeat_3: 4750499193368316613
+      Boxer02_defeat_4: 99808747414525987
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

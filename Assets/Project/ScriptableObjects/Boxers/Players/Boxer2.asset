@@ -16,5 +16,7 @@ MonoBehaviour:
     id: boxer02
     displayName: Maria
     visual: {fileID: -8078224510179747336, guid: 67a33ac80a64915419913097b2f32a47, type: 3}
+    visualVictory: {fileID: 4621786207936274083, guid: 40a85cfff0a447b4c9f1ee8f283ec729, type: 3}
+    visualLose: {fileID: 6450820471795987887, guid: ee648cd209decb34fb52c0388eeeb463, type: 3}
   health: 30
   cards: []

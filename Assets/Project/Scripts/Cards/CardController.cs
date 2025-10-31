@@ -34,7 +34,7 @@ public class CardController : MonoBehaviour
     public void ResetToOriginalValues()
     {
         power = originalPower;
-        defense = originalDefense;
+       // defense = originalDefense;
         cardView.UpdateCardVisuals();
     }
 }

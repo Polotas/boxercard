@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: ddde1c6e2fb16c444bd7ed1145e54dd3
+guid: 40a85cfff0a447b4c9f1ee8f283ec729
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4403758066796133435
-    second: Boxer_victory_0
-  - first:
-      213: 7294296858315478014
-    second: Boxer_victory_1
+      213: 4621786207936274083
+    second: Boxer02_victory_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -142,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boxer_victory_0
+      name: Boxer02_victory_0
       rect:
         serializedVersion: 2
-        x: 232
-        y: 343
-        width: 563
-        height: 666
+        x: 229
+        y: 371
+        width: 569
+        height: 605
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,30 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c30bdfce55b2e2c0800000000000000
-      internalID: -4403758066796133435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boxer_victory_1
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 888
-        width: 8
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ef35426885c8a3560800000000000000
-      internalID: 7294296858315478014
+      spriteID: 3ae57df9112e32040800000000000000
+      internalID: 4621786207936274083
       vertices: []
       indices: 
       edges: []
@@ -189,7 +164,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5ff346b2b4d8a1c40833a3069db1a7ce
+    spriteID: 047a0552a769edd42865cbe673a06bf1
     internalID: 0
     vertices: []
     indices: 
@@ -199,8 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Boxer_victory_0: -4403758066796133435
-      Boxer_victory_1: 7294296858315478014
+      Boxer02_victory_0: 4621786207936274083
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
