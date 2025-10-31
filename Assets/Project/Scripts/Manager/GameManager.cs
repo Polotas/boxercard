@@ -7,6 +7,9 @@ public class GameManager : Singleton<GameManager>
     public bool hasLoad = false;
     public string sceneToLoad;
 
+    public int currentCardUse;
+    public int currentDamageAdversary;
+    
     public PlayerData playerData;
 
     public Action<string> onUpdateDeck;
@@ -31,6 +34,22 @@ public class GameManager : Singleton<GameManager>
     public void Save()
     {
         ES3.Save("PlayerSave", playerData);
+    }
+    
+    public List<string> GetPlayerListOfCardsDeck()
+    {
+        var cards = new List<string>();
+        if (!hasLoad) Load();
+        
+        foreach (var t in playerData.listBoxerDeckData)
+        {
+            if (t.boxerID == playerData.currentBoxer)
+            {
+                return t.listOFCards;
+            }
+        }
+        
+        return cards;
     }
     
     public List<string> GetListOfCardsDeck(string boxer)

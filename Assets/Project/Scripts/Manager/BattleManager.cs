@@ -46,6 +46,8 @@ public class BattleManager : MonoBehaviour
     
     [Header("Events")]
     public BattleEvents battleEvents = new BattleEvents();
+
+    public bool playerWinner;
     private bool isBattleActive = false;
     
     [System.Serializable]
@@ -69,6 +71,8 @@ public class BattleManager : MonoBehaviour
     public GameTurn GetCurrentTurn() => gameTurn;
     public BattlePhase GetCurrentPhase() => currentPhase;
 
+    public Action onGameEnd;
+    
     private void Awake()
     {
         UITransition.Instance.CallTransition(TRANSITIONS.FULL_TO_NULL);
@@ -92,7 +96,7 @@ public class BattleManager : MonoBehaviour
         DragStatus.canDrag = false;
         Debug.Log("Fim do turno do jogador");
         battleEvents.OnBattleMessage?.Invoke("Fim do turno do jogador");
-        
+
         StartCoroutine(ProcessTurnTransition());
     }
     
@@ -103,7 +107,7 @@ public class BattleManager : MonoBehaviour
         gameTurn = GameTurn.Adversary;
         battleEvents.OnPhaseChanged?.Invoke(currentPhase);
         battleEvents.OnTurnChanged?.Invoke(gameTurn);
-        
+        ResetAttackCardsVisuals(true);
         yield return new WaitForSeconds(phaseTransitionDelay);
         
         // Adversário joga
@@ -123,10 +127,14 @@ public class BattleManager : MonoBehaviour
         yield return StartCoroutine(CleanupPhase());
         
         // Verificar fim de jogo
-        if (CheckGameEnd()) yield break;
-        
+        if (CheckGameEnd())
+        {
+            onGameEnd?.Invoke();
+            yield break;
+        }
+        ResetAttackCardsVisuals(false);
         // Próximo turno do jogador
-        StartNextPlayerTurn();
+        StartCoroutine(NextTurn(true));
     }
     
     private IEnumerator NextTurn(bool isPlayer)
@@ -141,6 +149,13 @@ public class BattleManager : MonoBehaviour
       
         // Reset de buffs por turno
         var state = GetState(isPlayer);
+        
+        // Se tinha bônus de ataque, resetar valores visuais das cartas
+        if (state.attackPowerBonus > 0)
+        {
+            ResetAttackCardsVisuals(isPlayer);
+        }
+        
         state.attackPowerBonus = 0;
         state.precisionIgnoreFirstDefenseThisTurn = false;
         state.overchargeSelfDamagePending = Mathf.Max(0, state.overchargeSelfDamagePending); // mantém até cleanup
@@ -291,6 +306,7 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
+                GameManager.Instance.currentDamageAdversary += remainingDamage;
                 battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
             }
             
@@ -376,7 +392,8 @@ public class BattleManager : MonoBehaviour
         var rectCard = cardDragHandler.GetComponent<RectTransform>();
         if (rectCard != null && cardDragHandler.fanLayout != null)
         {
-            cardDragHandler.fanLayout.AddCard(rectCard, cardDragHandler.originalSiblingIndex);
+            var cardController = rectCard.GetComponent<CardController>();
+            cardDragHandler.fanLayout.AddCard(rectCard,cardController ,cardDragHandler.originalSiblingIndex);
         }
     }
     
@@ -504,6 +521,7 @@ public class BattleManager : MonoBehaviour
             battleEvents.OnBattleEnded?.Invoke();
             isBattleActive = false;
             Debug.Log("Fim de jogo - Adversário venceu!");
+            playerWinner = false;
             return true;
         }
         
@@ -513,13 +531,23 @@ public class BattleManager : MonoBehaviour
             battleEvents.OnBattleEnded?.Invoke();
             isBattleActive = false;
             Debug.Log("Fim de jogo - Jogador venceu!");
+            playerWinner = true;
             return true;
         }
         
         return false;
     }
 
-    private void StartNextPlayerTurn() => StartCoroutine(NextTurn(true));
+    // Permite finalizar imediatamente quando a vida de algum lado chega a 0 fora do fluxo normal de turno
+    public bool TryEndGameImmediate()
+    {
+        if (CheckGameEnd())
+        {
+            onGameEnd?.Invoke();
+            return true;
+        }
+        return false;
+    }
 
     public void GetExtrasCards(bool isPlayer, int quantity)
     {
@@ -573,6 +601,7 @@ public class BattleManager : MonoBehaviour
     {
         GetState(isPlayer).attackPowerBonus += 4;
         battleEvents.OnBattleMessage?.Invoke(isPlayer ? "+4 Poder de Ataque neste turno (Jogador)" : "+4 Poder de Ataque neste turno (Adversário)");
+        UpdateAttackCardsVisuals(isPlayer, 4);
     }
 
     public void ApplyFocus(bool isPlayer)
@@ -599,6 +628,9 @@ public class BattleManager : MonoBehaviour
         state.attackPowerBonus += 8;
         state.overchargeSelfDamagePending += 5;
         battleEvents.OnBattleMessage?.Invoke("OVERCHARGE: +8 poder neste turno (leva 5 de dano no fim)");
+        
+        // Atualizar visualmente todas as cartas de ataque na mão
+        UpdateAttackCardsVisuals(isPlayer, 8);
     }
 
     public void ApplyPrecision(bool isPlayer)
@@ -686,5 +718,36 @@ public class BattleManager : MonoBehaviour
             battleEvents.OnBattleMessage?.Invoke($"Overcharge: {controller.name} sofreu {state.overchargeSelfDamagePending} de dano no fim do turno");
             state.overchargeSelfDamagePending = 0;
         }
+    }
+    
+    private void UpdateAttackCardsVisuals(bool isPlayer, int bonus)
+    {
+        DeckController controller = isPlayer ? (DeckController)playerController : (DeckController)adversaryController;
+        var cardsInHand = controller.GetCardsInHand();
+        
+        foreach (var card in cardsInHand)
+        {
+            if (card.data.type == CardType.Attack)
+            { 
+                if(card != null)
+                    card.ApplyPowerBonus(bonus);
+            }
+        }
+        
+        Debug.Log($"Bônus de +{bonus} aplicado visualmente em {cardsInHand.Count} cartas de ataque na mão");
+    }
+    
+    public void ResetAttackCardsVisuals(bool isPlayer)
+    {
+        DeckController controller = isPlayer ? (DeckController)playerController : (DeckController)adversaryController;
+        var cardsInHand = controller.GetCardsInHand();
+        
+        foreach (var card in cardsInHand)
+        {
+            if(card != null)
+                card.ResetToOriginalValues();
+        }
+        
+        Debug.Log($"Valores originais restaurados em {cardsInHand.Count} cartas na mão");
     }
 }

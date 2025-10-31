@@ -152,7 +152,13 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         
         droppedRect.DOKill();
-        droppedRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutQuad);
+        
+        // Manter escala invertida para cartas do adversário
+        Vector3 targetScale = (carController != null && !carController.isPlayer) 
+            ? new Vector3(-1, -1, 1) 
+            : Vector3.one;
+        
+        droppedRect.DOScale(targetScale, animationDuration).SetEase(Ease.OutQuad);
                 
         Image cardImage = droppedObject.GetComponent<Image>();
         if (cardImage != null)
@@ -170,9 +176,7 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         // Registrar última defesa jogada para Mirror Guard
         if (dropZoneType == DropZoneType.Defense && carController != null)
-        {
             battleManager.SetLastDefensePlayed(isPlayer, carController.data);
-        }
 
         // Se é uma carta dropada na mesa de ataque, executar ação baseada no tipo
         if (dropZoneType == DropZoneType.AttackTable)
@@ -182,31 +186,32 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             Debug.Log($"Tipo: {carController.data.type}");
             Debug.Log($"É do jogador: {carController.isPlayer}");
             Debug.Log($"Zona é do jogador: {isPlayer}");
-            
-            if (carController.data.type == CardType.Attack)
+
+            switch (carController.data.type)
             {
-                Debug.Log("Executando ataque imediato...");
-                StartCoroutine(ExecuteImmediateAttack(carController));
-            }
-            else if (carController.data.type == CardType.Health)
-            {
-                Debug.Log("Executando cura imediata...");
-                StartCoroutine(ExecuteImmediateHealing(carController));
-            }
-            else if (carController.data.type == CardType.Special)
-            {
-                Debug.Log("Executando Especial imediata...");
-                StartCoroutine(ExecuteImmediateSpecial(carController));
-            }
-            else
-            {
-                Debug.LogWarning($"Tipo de carta não reconhecido para ação imediata: {carController.data.type}");
+                case CardType.Attack:
+                    Debug.Log("Executando ataque imediato...");
+                    StartCoroutine(ExecuteImmediateAttack(carController));
+                    break;
+                case CardType.Health:
+                    Debug.Log("Executando cura imediata...");
+                    StartCoroutine(ExecuteImmediateHealing(carController));
+                    break;
+                case CardType.Special:
+                    Debug.Log("Executando Especial imediata...");
+                    StartCoroutine(ExecuteImmediateSpecial(carController));
+                    break;
+                default:
+                    Debug.LogWarning($"Tipo de carta não reconhecido para ação imediata: {carController.data.type}");
+                    break;
             }
         }
         else
         {
             Debug.Log($"Carta dropada em zona tipo: {dropZoneType} (não é mesa de ataque)");
         }
+        
+        if(carController.isPlayer) GameManager.Instance.currentCardUse++;
         
         Debug.Log($"Card {droppedObject.name} foi solto na drop zone {gameObject.name} - Posição: {droppedRect?.anchoredPosition}, Rotação resetada: {resetRotationOnDrop}");
     }
@@ -251,7 +256,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         var rectCard = cardDragHandler.GetComponent<RectTransform>();
         if (rectCard != null && cardDragHandler.fanLayout != null)
         {
-            cardDragHandler.fanLayout.AddCard(rectCard, cardDragHandler.originalSiblingIndex);
+            var cardController = cardDragHandler.GetComponent<CardController>();
+            cardDragHandler.fanLayout.AddCard(rectCard,cardController, cardDragHandler.originalSiblingIndex);
         }
         
         Debug.Log($"Card {cardDragHandler.gameObject.name} retornou para o deck da dropzone {gameObject.name}");
@@ -648,6 +654,12 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             
             // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
             battleManager.MarkDamageReceived(target == battleManager.playerController);
+
+            // Verificar e finalizar o jogo imediatamente se algum lado chegou a 0 de vida
+            if (battleManager != null && battleManager.TryEndGameImmediate())
+            {
+                yield break;
+            }
             
             yield return new WaitForSeconds(0.2f);
         }
@@ -800,19 +812,15 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         if (card == null) yield break;
         
-        // Limpar referências da zona
         currentCardController = null;
         currentUIDragHandler = null;
         
-        // Animação de desaparecimento com efeito de cura
         var cardTransform = card.GetComponent<RectTransform>();
         var cardImage = card.GetComponent<Image>();
         
         if (cardTransform != null)
         {
-            // Efeito de dispersão para cima
             cardTransform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.InBack);
-            cardTransform.DOMoveY(cardTransform.position.y + 100f, 0.4f).SetEase(Ease.OutQuad);
             
             if (cardImage != null)
             {
@@ -822,10 +830,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             yield return new WaitForSeconds(0.4f);
         }
         
-        // Remover carta do deck antes de destruir
         RemoveCardFromOwnerDeck(card);
         
-        // Destruir carta
         if (card != null)
         {
             Destroy(card.gameObject);

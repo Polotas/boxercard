@@ -8,9 +8,7 @@ public class UIGameStart : MonoBehaviour
     public Button buttonStart;
     public Animator animationUI;
     public Animator animationGamePlayUI;
-    
-    public BoxerData playerData;
-    
+
     [Header("Boxers")] 
     public PlayerController playerController;
     public AdversaryController adversaryController;
@@ -18,6 +16,7 @@ public class UIGameStart : MonoBehaviour
     public CardBoxerController boxerAdversaryAnimationUI;
     private BattleManager _battleManager;
     private BoxerManager _boxerManager;
+    private BoxerData _boxerDataPlayer;
     private BoxerData _boxerDataAdversary;
     
     private void Awake()
@@ -26,9 +25,9 @@ public class UIGameStart : MonoBehaviour
         _battleManager = FindFirstObjectByType<BattleManager>();
         _boxerManager = FindFirstObjectByType<BoxerManager>(); 
         _battleManager.battleEvents.OnTurnChanged += CallNextTurn;
-        
+        _boxerDataPlayer = _boxerManager.GetPlayerBoxerData();
         _boxerDataAdversary = _boxerManager.GetAdversary();
-        boxerPlayerAnimationUI.SetupBoxer(playerData,false);
+        boxerPlayerAnimationUI.SetupBoxer(_boxerDataPlayer,false);
         boxerAdversaryAnimationUI.SetupBoxer(_boxerDataAdversary,false);
     }
 
@@ -36,13 +35,14 @@ public class UIGameStart : MonoBehaviour
 
     private IEnumerator IE_StartGame()
     {
+        GameManager.Instance.currentCardUse = 0;
+        GameManager.Instance.currentDamageAdversary = 0;
         animationUI.Play("Game_Start_Exit");
         
         yield return new WaitForSeconds(0.6f);
         animationGamePlayUI.Play("GamePlay");
         objCanvasGame.SetActive(true);
-        playerData.cards = GameManager.Instance.GetListOfCardsDeck(null);
-        playerController.StartGame(playerData);
+        playerController.StartGame(_boxerDataPlayer);
         adversaryController.StartGame(_boxerDataAdversary);
         
         yield return new WaitForSeconds(2f);

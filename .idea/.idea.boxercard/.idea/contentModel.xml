@@ -4,13 +4,13 @@
     <e p="C:\Users\afons\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
     <e p="C:\Users\afons\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_boxercard.-1344558416.00" t="ExcludeRecursive" />
     <e p="C:\Users\afons\OneDrive\Unity\Projectos\boxercard" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Plugins" t="Include">
           <e p="Demigiant" t="Include">
-            <e p="Demigiant.asmdef" t="Include" />
             <e p="DemiLib" t="Include">
               <e p="Core" t="Include">
                 <e p="DemiLib.xml" t="Include" />
@@ -340,6 +340,7 @@
               </e>
               <e p="UIDragHandler.cs" t="Include" />
               <e p="UIDropZone.cs" t="Include" />
+              <e p="UIEndGame.cs" t="Include" />
               <e p="UIGamePlay.cs" t="Include" />
               <e p="UIGameStart.cs" t="Include" />
               <e p="UIHome.cs" t="Include" />
@@ -409,7 +410,6 @@
       <e p="boxercard.sln" t="IncludeFlat" />
       <e p="Coffee.SoftMaskForUGUI.csproj" t="IncludeRecursive" />
       <e p="Coffee.SoftMaskForUGUI.Editor.csproj" t="IncludeRecursive" />
-      <e p="Demigiant.csproj" t="IncludeRecursive" />
       <e p="DocCodeExamples.csproj" t="IncludeRecursive" />
       <e p="DOTween.Modules.csproj" t="IncludeRecursive" />
       <e p="DOTweenPro.EditorScripts.csproj" t="IncludeRecursive" />

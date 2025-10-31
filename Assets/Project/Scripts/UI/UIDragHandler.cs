@@ -147,7 +147,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         
         originalParent = rectTransform.parent;
 
-        if(onDeck) fanLayout.RemoveCard(rectTransform);
+        if(onDeck) fanLayout.RemoveCard(rectTransform,_cardController);
 
         CreateShadow();
         
@@ -242,7 +242,7 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         shadowClone.name = gameObject.name + "_Shadow";
         shadowClone.transform.localScale = Vector3.one;
         
-        if(onDeck) fanLayout.AddCard(rectTransformShadowClone,originalSiblingIndex);
+        if(onDeck) fanLayout.AddCard(rectTransformShadowClone,_cardController,originalSiblingIndex);
         
         Debug.Log("CREATE SHADOW: " + shadowClone.name);
         
@@ -281,7 +281,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 });
             
             var rectTransformShadowClone = shadowClone.GetComponent<RectTransform>();
-            fanLayout.RemoveCard(rectTransformShadowClone);
+            var cardController = shadowClone.GetComponent<CardController>();
+            fanLayout.RemoveCard(rectTransformShadowClone,cardController);
         }
         else if (shadowClone != null)
         {
@@ -308,7 +309,8 @@ public class UIDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (onDeck)
         {
-            fanLayout.AddCard(rectTransform,originalSiblingIndex);
+            var carController = rectTransform.GetComponent<CardController>();
+            fanLayout.AddCard(rectTransform,carController,originalSiblingIndex);
             _cardController.cardView.SetShadow(new Vector2(-5,-5));
         }
         else

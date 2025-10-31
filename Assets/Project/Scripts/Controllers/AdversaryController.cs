@@ -83,7 +83,7 @@ public class AdversaryController : DeckController
     {
         bool playerHasAttack = HasPlayerAttackInCorner();
         var rectTransformCard = cardToPlace.GetComponent<RectTransform>();
-        fanLayout.RemoveCard(rectTransformCard);
+        fanLayout.RemoveCard(rectTransformCard,cardToPlace);
         
         switch (cardToPlace.data.type)
         {
@@ -311,6 +311,7 @@ public class AdversaryController : DeckController
         cardTransform.SetAsLastSibling(); // Ficar por cima de outras cartas
         
         cardTransform.position = worldPosition;
+        cardTransform.localScale = new Vector3(-1, -1, 1); // Garantir escala correta
         
         cardTransform.anchorMax = new Vector2(0.5f, 0.5f);
         cardTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -811,7 +812,7 @@ public class AdversaryController : DeckController
                     Debug.Log($"✅ Carta {targetCard.displayName} encontrada na mão!");
                     
                     // Remover carta do FanLayout antes de usar
-                    fanLayout.RemoveCard(cardTransform);
+                    fanLayout.RemoveCard(cardTransform,cardController);
                     
                     return cardController;
                 }

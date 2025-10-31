@@ -21,4 +21,6 @@ public class BoxerInfo
     public string id;
     public string displayName;
     public Sprite visual;
+    public Sprite visualVictory;
+    public Sprite visualLose;
 }

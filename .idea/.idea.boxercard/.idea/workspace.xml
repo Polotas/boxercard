@@ -4,15 +4,29 @@
     <list default="true" id="c3e1c0fc-d2dc-4001-b075-92ee8deecbf2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI_Home/UI_Home_Enter.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI_Home/UI_Home_Enter.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Demigiant/Demigiant.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Demigiant/Demigiant.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/Boxer1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/UI/CardsView/Boxer1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/02_Home.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scenes/02_Home.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Data/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Data/PlayerData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/03_Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scenes/03_Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Players/Boxer1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Players/Boxer1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Data/BoxerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Data/BoxerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BoxerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BoxerManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeCardViewer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeCardViewer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Settings/UniversalRP.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Settings/UniversalRP.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGamePlay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGamePlay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +45,8 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@e375ff18e90f/Runtime/UGUI/UI/Core/VertexModifiers/Outline.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UiDeckHomeCardView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Project/Scripts/DragStatus.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Pactto_Replay/Assets/_Project/Scripts/Data/AppData.cs" root0="SKIP_HIGHLIGHTING" />
@@ -49,12 +65,7 @@
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/DragStatus.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/BattleManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Util/UITransition.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Init.cs" />
@@ -63,30 +74,39 @@
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/PlayerDecksManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UI_DeckHomeController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/BoxerData.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UiDeckHomeCardView.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDecksHome.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeCards.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeSelector.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UiDeckHomeBoxerDeck.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Util/UIMouseEvent.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/CardData.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeBoxer.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UISelectBoxer.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIHome.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/PlayerController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIPopup.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeCardViewer.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/PlayerData.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIOptions.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/CardsManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UiDeckHomeBoxerDeck.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeCards.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckHomeSelector.cs" />
+      <option value="$PROJECT_DIR$/../../../Área de Trabalho/BoxingCard/index.html" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BoxerManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardSpecials.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/DeckCards.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/FanLayout.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDragHandler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGameStart.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGamePlay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/BoxerData.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="33XzAJUQuQ422e8sbgMMXiHw3Bd" />
@@ -135,6 +155,8 @@
       <workItem from="1760270663440" duration="18224000" />
       <workItem from="1760795863615" duration="3562000" />
       <workItem from="1761036119970" duration="22943000" />
+      <workItem from="1761390391275" duration="1617000" />
+      <workItem from="1761747595866" duration="10596000" />
     </task>
     <servers />
   </component>
@@ -160,13 +182,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs</url>
-          <line>44</line>
+          <line>43</line>
           <properties documentPath="C:\Users\afons\OneDrive\Unity\Projectos\boxercard\Assets\Project\Scripts\Controllers\DeckController.cs" initialLine="39" containingFunctionPresentation="method 'IE_StarchMatch'">
             <startOffsets>
-              <option value="1200" />
+              <option value="1229" />
             </startOffsets>
             <endOffsets>
-              <option value="1212" />
+              <option value="1241" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />

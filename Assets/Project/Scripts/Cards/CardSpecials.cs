@@ -13,6 +13,8 @@ public class CardSpecials : MonoBehaviour
     {
         var special = _cardController.data.special;
         
+        Debug.Log("SPECIAL TYPE: " + special);
+        
         switch (special)
         {
             case SpecialType.ExtraCards:

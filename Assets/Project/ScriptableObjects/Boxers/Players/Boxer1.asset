@@ -16,5 +16,7 @@ MonoBehaviour:
     id: boxer01
     displayName: Matt
     visual: {fileID: 2093567087635455240, guid: ed31b2a10437399419aa4bb1a01a0ffe, type: 3}
+    visualVictory: {fileID: -4403758066796133435, guid: ddde1c6e2fb16c444bd7ed1145e54dd3, type: 3}
+    visualLose: {fileID: 4945544210645434484, guid: dc4e9163ccf232a499d10e158c0f7678, type: 3}
   health: 30
   cards: []

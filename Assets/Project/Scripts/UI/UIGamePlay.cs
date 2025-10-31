@@ -11,10 +11,12 @@ public class UIGamePlay : MonoBehaviour
     public TextMeshProUGUI textCurrentPhase;
 
     private BattleManager _battleManager;
+    private UIEndGame _endGame;
     
     private void Awake()
     {
         _battleManager = FindFirstObjectByType<BattleManager>();
+        _endGame = FindFirstObjectByType<UIEndGame>();
         buttonEndTurn.onClick.AddListener(Button_EndTurn);
         
         SubscribeToBattleEvents();
@@ -33,6 +35,7 @@ public class UIGamePlay : MonoBehaviour
         _battleManager.battleEvents.OnPhaseChanged += UpdateCurrentPhase;
         _battleManager.battleEvents.OnBattleMessage += UpdateBattleMessage;
         _battleManager.battleEvents.OnBattleEnded += OnBattleEnded;
+        _battleManager.onGameEnd += EndGame;
     }
     
     private void OnDestroy()
@@ -109,4 +112,6 @@ public class UIGamePlay : MonoBehaviour
     }
     
     public void StartBattle() => _battleManager.StartBattle();
+
+    private void EndGame() => _endGame.EndGame(_battleManager.playerWinner);
 }

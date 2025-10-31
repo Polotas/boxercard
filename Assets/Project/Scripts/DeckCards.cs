@@ -5,6 +5,7 @@ public class DeckCards : MonoBehaviour
     [SerializeField] private FanLayout fanLayout;
     [SerializeField] private GameObject cardPrefab;
     
+    
     public void SpawnCard(CardData data, bool flipCard = true, bool player = true)
     {
         RectTransform card = Instantiate(cardPrefab).GetComponent<RectTransform>();
@@ -16,7 +17,7 @@ public class DeckCards : MonoBehaviour
         else dragHandler.fanLayout = fanLayout;
 
         carController.SetupCard(data,flipCard,player);
-        fanLayout.AddCard(card);
+        fanLayout.AddCard(card,carController);
     }
 
     // Spawna uma carta já configurada e retorna o GameObject (sem adicionar ao FanLayout)

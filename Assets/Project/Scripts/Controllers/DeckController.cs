@@ -6,18 +6,17 @@ public class DeckController : MonoBehaviour
 {
     public BoxerData boxerData;
     public bool player = false;
+    public bool canDoDamage = true;
     public int maxHealth = 30;
     public int health = 100;
 
     public BattleManager battleManager;
+    public FanLayout cardsOnHands;
     public CardBoxerController cardBoxerController;
     public DeckCards deckCards;
     public List<string> cards;
     public List<CardData> currentCards;
     public List<GameObject> cardsObj;
-
-    public bool canDoDamage = true;
-    
     private CardsManager _cardsManager;
 
     private void Awake()
@@ -62,12 +61,40 @@ public class DeckController : MonoBehaviour
     {
         if (currentCards.Count > 0)
         {
-            deckCards.SpawnCard(currentCards[0],player,player);
+            CardData cardToSpawn = currentCards[0];
+            deckCards.SpawnCard(cardToSpawn, player, player);
             currentCards.RemoveAt(0);
+            
+            // Aplicar bônus visual se houver (Adrenaline Rush ou Overcharge ativos)
+            if (battleManager != null)
+            {
+                var state = battleManager.GetState(player);
+                if (state.attackPowerBonus > 0 && cardToSpawn.type == CardType.Attack)
+                {
+                    // Aguardar um frame para a carta ser totalmente inicializada
+                    StartCoroutine(ApplyBonusToNewCard(cardToSpawn, state.attackPowerBonus));
+                }
+            }
         }
         else
         {
             Debug.LogWarning($"{name} não tem mais cartas no deck para spawnar");
+        }
+    }
+    
+    private IEnumerator ApplyBonusToNewCard(CardData cardData, int bonus)
+    {
+        yield return null; // Aguardar 1 frame
+        
+        var cardsInHand = GetCardsInHand();
+        foreach (var card in cardsInHand)
+        {
+            if (card.data.id == cardData.id && card.data.type == CardType.Attack)
+            {
+                card.ApplyPowerBonus(bonus);
+                Debug.Log($"Bônus de +{bonus} aplicado à nova carta {cardData.displayName}");
+                break;
+            }
         }
     }
     
@@ -92,4 +119,6 @@ public class DeckController : MonoBehaviour
     {
         canDoDamage = true;
     }
+    
+    public List<CardController> GetCardsInHand() => cardsOnHands.cardOnHands;
 }

@@ -12,10 +12,11 @@ public class FanLayout : MonoBehaviour
     [Header("Animação")]
     [SerializeField] private float animationDuration = 0.5f;
     
+    public List<CardController> cardOnHands = new List<CardController>();
     [SerializeField] private List<RectTransform> cards = new List<RectTransform>();
 
     
-    public void AddCard(RectTransform card, int siblingIndex = -1)
+    public void AddCard(RectTransform card, CardController cardControler, int siblingIndex = -1)
     {
         if (cards.Contains(card)) return;
         
@@ -32,12 +33,15 @@ public class FanLayout : MonoBehaviour
             cards[i].SetSiblingIndex(i);
         }
         
+        cardOnHands.Add(cardControler);
+        
         UpdateLayout();
     }
 
-    public void RemoveCard(RectTransform card)
+    public void RemoveCard(RectTransform card, CardController cardControler)
     {
         cards.Remove(card);
+        cardOnHands.Remove(cardControler);
         UpdateLayout();
     }
     
