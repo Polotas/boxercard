@@ -14,6 +14,9 @@ public class CardBoxerView : MonoBehaviour
     
     public GameObject healFX;
     public GameObject attackFX;
+    public GameObject stunFX;
+
+    public Animator animator;
     
     public void Setup(BoxerData data, bool isPlayer)
     {
@@ -39,6 +42,7 @@ public class CardBoxerView : MonoBehaviour
             attackFX.SetActive(false);
             CardImpactAnimation.PlayDamageImpact(visual);
             attackFX.SetActive(true);
+            animator.Play("Hit");
         }
         else if (isHealing)
         {
@@ -49,4 +53,10 @@ public class CardBoxerView : MonoBehaviour
         
         currentHealth = heath;
     }
+
+    public void UpdateStun(bool active)
+    {
+        animator.SetBool("Stun",active);
+        stunFX.SetActive(active); 
+    } 
 }

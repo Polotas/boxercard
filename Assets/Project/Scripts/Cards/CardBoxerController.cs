@@ -22,15 +22,19 @@ public class CardBoxerController : MonoBehaviour
 
     private void UpdateHealth(int valor) => cardBoxerView.UpdateHealthValor(valor);
     
+    private void UpdateStun(bool active) => cardBoxerView.UpdateStun(active);
+    
     private void SubscribeToBattleEvents()
     {
         switch (isPlayer)
         {
             case true:
                 _battleManager.battleEvents.OnPlayerHealthChanged += UpdateHealth;
+                _battleManager.battleEvents.OnPlayerStun += UpdateStun;
                 break;
             case false:
                 _battleManager.battleEvents.OnAdversaryHealthChanged += UpdateHealth;
+                _battleManager.battleEvents.OnAdversaryStun += UpdateStun;
                 break;
         }
     }

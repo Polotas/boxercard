@@ -29,6 +29,7 @@ public class CardController : MonoBehaviour
     {
         power = originalPower + bonus;
         cardView.UpdateCardVisuals();
+        cardView.fxBuffCard.SetActive(true);
     }
     
     public void ResetToOriginalValues()
@@ -36,5 +37,6 @@ public class CardController : MonoBehaviour
         power = originalPower;
        // defense = originalDefense;
         cardView.UpdateCardVisuals();
+        cardView.fxBuffCard.SetActive(false);
     }
 }

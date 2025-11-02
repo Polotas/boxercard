@@ -16,6 +16,7 @@ public enum DropZoneType
 public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public FanLayout fanLayout;
+    public Image backgroundImage;
     
     [Header("Visual Feedback")]
     [SerializeField] private Color normalColor = Color.white;
@@ -44,7 +45,6 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     [SerializeField] private float shakeIntensity = 2f;
 
     public bool isPlayer;
-    private Image backgroundImage;
     private RectTransform rectTransform;
     private Canvas canvas;
     private bool isHighlighted = false;
@@ -66,7 +66,6 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-        backgroundImage = GetComponent<Image>();
         battleManager = FindFirstObjectByType<BattleManager>();
         
         if (backgroundImage != null) return;
@@ -427,8 +426,24 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     
     private IEnumerator ExecuteImmediateAttack(CardController attackCard)
     {
-        yield return StartCoroutine(PlayAttackAnimation(attackCard.gameObject,ProcessImmediateAttackDamage(attackCard)));
-        yield return StartCoroutine(RemoveCard(attackCard));
+        // Flurry: executa 3 animações de ataque separadas
+        if (attackCard.data.id == "Flurry")
+        {
+            battleManager.battleEvents.OnBattleMessage?.Invoke("Flurry: 3 golpes rápidos!");
+            yield return new WaitForSeconds(0.5f);
+            
+            for (int i = 0; i < 3; i++)
+            {
+                yield return StartCoroutine(PlayAttackAnimation(attackCard.gameObject, ProcessFlurryHit(attackCard, i + 1)));
+                yield return new WaitForSeconds(0.2f); // Pequena pausa entre os hits
+            }
+            yield return StartCoroutine(RemoveCard(attackCard));
+        }
+        else
+        {
+            yield return StartCoroutine(PlayAttackAnimation(attackCard.gameObject,ProcessImmediateAttackDamage(attackCard)));
+            yield return StartCoroutine(RemoveCard(attackCard));
+        }
     }
     
     private IEnumerator ProcessImmediateAttackDamage(CardController attackCard)
@@ -448,6 +463,68 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
 
         yield return StartCoroutine(ProcessAttackLogic(attackCard, target, attackerName));
+    }
+    
+    private IEnumerator ProcessFlurryHit(CardController attackCard, int hitNumber)
+    {
+        DeckController target = null;
+        string attackerName = "";
+        
+        if (attackCard.isPlayer)
+        {
+            target = battleManager.adversaryController;
+            attackerName = "Jogador";
+        }
+        else
+        {
+            target = battleManager.playerController;
+            attackerName = "Adversário";
+        }
+        
+        // Cada hit do Flurry causa 3 de dano
+        int flurryDamage = 3;
+        
+        // Aplica buffs apenas no primeiro hit
+        if (hitNumber == 1)
+        {
+            var attackerState = battleManager.GetState(attackCard.isPlayer);
+            
+            // Focus: dobra o poder da PRÓXIMA carta
+            if (attackerState.focusDoubleNextCard)
+            {
+                flurryDamage *= 2;
+                attackerState.focusDoubleNextCard = false;
+            }
+            
+            // AdrenalineRush/Overcharge: bônus cumulativo no turno
+            flurryDamage += attackerState.attackPowerBonus;
+        }
+        
+        battleManager.battleEvents.OnBattleMessage?.Invoke($"{attackerName} - Flurry golpe {hitNumber}!");
+        yield return new WaitForSeconds(0.3f);
+        
+        // Aplica o dano diretamente
+        if (flurryDamage > 0)
+        {
+            if(!target.canDoDamage) yield break;
+            target.health = Mathf.Max(0, target.health - flurryDamage);
+            battleManager.battleEvents.OnBattleMessage?.Invoke($"{target.name} recebe {flurryDamage} de dano! Vida: {target.health}");
+            
+            if (target == battleManager.playerController)
+            {
+                battleManager.battleEvents.OnPlayerHealthChanged?.Invoke(target.health);
+            }
+            else
+            {
+                battleManager.battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
+            }
+            
+            // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
+            if (hitNumber == 1)
+            {
+                battleManager.MarkDamageReceived(target == battleManager.playerController);
+            }
+        }
     }
     
     private IEnumerator ProcessAttackLogic(CardController attackCard, DeckController target, string attackerName)
@@ -616,16 +693,6 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             battleManager.battleEvents.OnBattleMessage?.Invoke("Counter Punch: dano dobrado!");
         }
 
-        // Flurry: 3 mini-ataques de 3 cada
-        if (attackCard.data.id == "Flurry")
-        {
-            int hits = 3;
-            int perHit = 3;
-            int total = hits * perHit;
-            remainingDamage = total; // Simplificação: aplica total após animação
-            battleManager.battleEvents.OnBattleMessage?.Invoke("Flurry: 3 golpes rápidos!");
-        }
-
         // Finisher: só causa dano total se alvo <= 30% HP
         if (attackCard.data.id == "Finisher")
         {
@@ -654,6 +721,12 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             
             // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
             battleManager.MarkDamageReceived(target == battleManager.playerController);
+
+            // Impacto forte quando o adversário recebe dano alto
+            if (target == battleManager.adversaryController && remainingDamage > 10)
+            {
+                battleManager.PlayHeavyHitEffectsOnAdversary();
+            }
 
             // Verificar e finalizar o jogo imediatamente se algum lado chegou a 0 de vida
             if (battleManager != null && battleManager.TryEndGameImmediate())
@@ -804,7 +877,19 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         
         yield return sequence.WaitForCompletion();
 
-        specialCard.cardSpecials.UseSpecial();
+        if (specialCard.cardSpecials != null)
+        {
+            specialCard.cardSpecials.UseSpecial();
+        }
+        else
+        {
+            Debug.LogWarning($"CardSpecials ausente em {specialCard.data.displayName}. Executando fallback do especial.");
+            // Fallback mínimo para especiais críticos
+            if (specialCard.data.special == SpecialType.SecondWind)
+            {
+                battleManager.ApplySecondWind(specialCard.isPlayer);
+            }
+        }
         yield return new WaitForSeconds(1);
     }
     

@@ -25,6 +25,7 @@ public class CardView : MonoBehaviour
     public Color colorNormal;
     public Color colorDefense;
     public Color colorCorner;
+    public GameObject fxBuffCard;
     
     public void SetupCard(CardData data, bool flipCard = true)
     {

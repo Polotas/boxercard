@@ -34,10 +34,12 @@ MonoBehaviour:
     - PPv2URPConverters
     - Coffee.SoftMaskForUGUI
     - PsdPlugin
+    - Assembly-CSharp-firstpass
     - Coffee.SoftMaskForUGUI.Editor
     - DOTween.Modules
+    - Coffee.UIParticle
     - EasySave3Editor
-    - Assembly-CSharp-firstpass
+    - Coffee.UIParticle.Editor
     - DOTweenPro.EditorScripts
     - DOTweenPro.Scripts
     - ScriptablePacker

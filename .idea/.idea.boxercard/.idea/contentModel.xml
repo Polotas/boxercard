@@ -273,6 +273,47 @@
               </e>
             </e>
           </e>
+          <e p="Epic Toon FX" t="Include">
+            <e p="Changelog.txt" t="Include" />
+            <e p="Demo" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="ETFXButtonScript.cs" t="Include" />
+                <e p="ETFXEffectController.cs" t="Include" />
+                <e p="ETFXEffectControllerPooled.cs" t="Include" />
+                <e p="ETFXEffectCycler.cs" t="Include" />
+                <e p="ETFXFireProjectile.cs" t="Include" />
+                <e p="ETFXLoopScript.cs" t="Include" />
+                <e p="ETFXMouseOrbit.cs" t="Include" />
+                <e p="ETFXProjectileScript.cs" t="Include" />
+                <e p="ETFXSceneManager.cs" t="Include" />
+                <e p="ETFXTarget.cs" t="Include" />
+                <e p="VFX Library" t="Include">
+                  <e p="ParticleEffectsLibrary.cs" t="Include" />
+                  <e p="PEButtonScript.cs" t="Include" />
+                  <e p="UICanvasManager.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="Prefabs" t="Include">
+              <e p="Combat" t="Include">
+                <e p="Combat FX.txt" t="Include" />
+              </e>
+              <e p="Environment" t="Include">
+                <e p="Environment FX.txt" t="Include" />
+              </e>
+              <e p="Interactive" t="Include">
+                <e p="Interactive FX.txt" t="Include" />
+              </e>
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="ETFXLightFade.cs" t="Include" />
+              <e p="ETFXPitchRandomizer.cs" t="Include" />
+              <e p="ETFXRotation.cs" t="Include" />
+            </e>
+            <e p="Upgrade" t="Include">
+              <e p="URP Compatibility.txt" t="Include" />
+            </e>
+          </e>
           <e p="Lana Studio" t="Include">
             <e p="Hyper Casual FX" t="Include">
               <e p="Demo" t="Include">
@@ -410,6 +451,8 @@
       <e p="boxercard.sln" t="IncludeFlat" />
       <e p="Coffee.SoftMaskForUGUI.csproj" t="IncludeRecursive" />
       <e p="Coffee.SoftMaskForUGUI.Editor.csproj" t="IncludeRecursive" />
+      <e p="Coffee.UIParticle.csproj" t="IncludeRecursive" />
+      <e p="Coffee.UIParticle.Editor.csproj" t="IncludeRecursive" />
       <e p="DocCodeExamples.csproj" t="IncludeRecursive" />
       <e p="DOTween.Modules.csproj" t="IncludeRecursive" />
       <e p="DOTweenPro.EditorScripts.csproj" t="IncludeRecursive" />
@@ -513,6 +556,28 @@
               <e p="Hidden-UI-SoftMask.shader" t="Include" />
               <e p="Hidden-UI-TerminalMaskingShape.shader" t="Include" />
               <e p="SoftMask.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="com.coffee.ui-particle@4dfcb9075e16" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AnimatablePropertyEditor.cs" t="Include" />
+              <e p="Coffee.UIParticle.Editor.asmdef" t="Include" />
+              <e p="UIParticleEditor.cs" t="Include" />
+              <e p="UIParticleMenu.cs" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="Runtime" t="Include">
+              <e p="AnimatableProperty.cs" t="Include" />
+              <e p="Coffee.UIParticle.asmdef" t="Include" />
+              <e p="ModifiedMaterial.cs" t="Include" />
+              <e p="UIParticle.cs" t="Include" />
+              <e p="UIParticleAttractor.cs" t="Include" />
+              <e p="UIParticleRenderer.cs" t="Include" />
+              <e p="UIParticleUpdater.cs" t="Include" />
+              <e p="Utils.cs" t="Include" />
+            </e>
+            <e p="Shaders" t="Include">
+              <e p="UIAdditive.shader" t="Include" />
             </e>
           </e>
           <e p="com.unity.2d.animation@34e0443c58ed" t="Include">

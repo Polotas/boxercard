@@ -24,6 +24,8 @@ public class BattleEvents
 {
     public Action<int> OnPlayerHealthChanged;
     public Action<int> OnAdversaryHealthChanged;
+    public Action<bool> OnPlayerStun;
+    public Action<bool> OnAdversaryStun;
     public Action<GameTurn> OnTurnChanged;
     public Action<BattlePhase> OnPhaseChanged;
     public Action<string> OnBattleMessage;
@@ -32,6 +34,8 @@ public class BattleEvents
 
 public class BattleManager : MonoBehaviour
 {
+    public RectTransform rectGame;
+    
     [Header("Controllers")]
     public PlayerController playerController;
     public AdversaryController adversaryController;
@@ -165,6 +169,8 @@ public class BattleManager : MonoBehaviour
         {
             state.stunnedNextTurn = false;
             battleEvents.OnBattleMessage?.Invoke(isPlayer ? "Jogador está atordoado e perde o turno!" : "Adversário está atordoado e perde o turno!");
+            // Tremor no início do turno em que o lado está atordoado
+            DoStun(isPlayer,false);
             yield return new WaitForSeconds(phaseTransitionDelay);
             yield break;
         }
@@ -310,6 +316,12 @@ public class BattleManager : MonoBehaviour
                 battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
             }
             
+            // Impacto forte quando o adversário recebe dano alto
+            if (target == adversaryController && remainingDamage > 10)
+            {
+                PlayHeavyHitEffectsOnAdversary();
+            }
+
             yield return new WaitForSeconds(1f);
         }
         else
@@ -549,6 +561,25 @@ public class BattleManager : MonoBehaviour
         return false;
     }
 
+    private void DoStun(bool isPlayer, bool stun)
+    {
+        DeckController controller = isPlayer ? (DeckController)playerController : (DeckController)adversaryController;
+        if(isPlayer) battleEvents.OnPlayerStun?.Invoke(stun);
+        if(!isPlayer) battleEvents.OnAdversaryStun?.Invoke(stun);
+        
+        // if (controller == null) return;
+        //
+        // var rect = controller.GetComponent<RectTransform>();
+        //
+        // if (rect != null)
+        //     rect.DOShakePosition(0.35f, 15f);
+    }
+
+    public void PlayHeavyHitEffectsOnAdversary()
+    {
+        rectGame.DOShakePosition(0.4f, 25f);
+    }
+
     public void GetExtrasCards(bool isPlayer, int quantity)
     {
         if (isPlayer)
@@ -614,6 +645,9 @@ public class BattleManager : MonoBehaviour
     {
         GetState(!casterIsPlayer).stunnedNextTurn = true;
         battleEvents.OnBattleMessage?.Invoke("STUN: oponente perderá o próximo turno");
+        // Tremor imediato na carta do oponente ao aplicar Stun
+        
+        DoStun(!casterIsPlayer,true);
     }
 
     public void ApplyBreakGuardToOpponent(bool casterIsPlayer)
