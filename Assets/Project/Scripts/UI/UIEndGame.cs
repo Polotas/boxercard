@@ -19,8 +19,11 @@ public class UIEndGame : MonoBehaviour
     public TextMeshProUGUI textTotalCards;
     public Button buttonNext;
 
+    private PlayerDecksManager _playerDecksManager;
+
     public void Start()
     {
+        _playerDecksManager = FindFirstObjectByType<PlayerDecksManager>();
         buttonNext.onClick.AddListener(Button_Next);
     }
 
@@ -28,6 +31,8 @@ public class UIEndGame : MonoBehaviour
 
     private IEnumerator IE_EndGame(bool isWin)
     {
+        var boxerId = GameManager.Instance.playerData.currentBoxer;
+        visualPlayer.sprite = isWin ? _playerDecksManager.GetVictoryVisual(boxerId) : _playerDecksManager.GetLoseVisual(boxerId);
         canvas.sortingOrder = 1;
         yield return new WaitForSeconds(1);
         UITransition.Instance.CallTransition(TRANSITIONS.NULL_TO_MIDLE);
@@ -47,12 +52,13 @@ public class UIEndGame : MonoBehaviour
         textHeadLine.text = isWin ? "VICTORY BY KNOCKOUT" : "LOST BY KNOCKOUT";
         var damage = GameManager.Instance.currentDamageAdversary;
         var cardUse = GameManager.Instance.currentCardUse;
-
+        
+        
         var startDamage = 0;
         var startCardUse = 0;
         
-        DOTween.To(() => 0, x => { startDamage = x; textTotalDamage.text = startDamage.ToString(); }, damage, 3f).SetEase(Ease.Linear);
-        DOTween.To(() => 0, x => { startCardUse = x; textTotalCards.text = startCardUse.ToString(); }, cardUse, 3f).SetEase(Ease.Linear);
+        DOTween.To(() => 0, x => { startDamage = x; textTotalDamage.text = startDamage.ToString(); }, damage, 1f).SetEase(Ease.Linear);
+        DOTween.To(() => 0, x => { startCardUse = x; textTotalCards.text = startCardUse.ToString(); }, cardUse, 1f).SetEase(Ease.Linear);
     }
     
     private void Button_Next() =>   UITransition.Instance.BackToLoading("03_Home",TRANSITIONS.NULL_TO_FULL,null,0);

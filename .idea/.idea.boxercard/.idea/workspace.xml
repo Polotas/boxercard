@@ -2,21 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3e1c0fc-d2dc-4001-b075-92ee8deecbf2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.boxercard/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3Defaults.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3Defaults.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/GamePlay.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/UI/GamePlay.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/Card.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/CardBoxer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/BG.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/BG.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Hit.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Hit.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Idle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Idle.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Stun.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Art/Animation/Boxer/Stun.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Prefabs/Managers/CardsManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Prefabs/Managers/CardsManager.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scenes/03_Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scenes/03_Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy2.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy2.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy3.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Boxers/Boxer_Enemy3.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Special/Second Wind.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/ScriptableObjects/Cards/Special/Second Wind.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/AdversaryController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/PlayerDecksManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/Manager/PlayerDecksManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +61,6 @@
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Init.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Util/LoadingScreen.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDeckSelect.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/PlayerDecksManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UI_DeckHomeController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UiDeckHomeCardView.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDeck/UIDecksHome.cs" />
@@ -89,7 +89,6 @@
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIGamePlay.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Data/BoxerData.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIDropZone.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Controllers/DeckController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerController.cs" />
@@ -97,6 +96,8 @@
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardController.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Cards/CardBoxerView.cs" />
       <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/BattleManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/Manager/PlayerDecksManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Project/Scripts/UI/UIEndGame.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="33XzAJUQuQ422e8sbgMMXiHw3Bd" />
@@ -147,6 +148,7 @@
       <workItem from="1761036119970" duration="22943000" />
       <workItem from="1761390391275" duration="1617000" />
       <workItem from="1761747595866" duration="17480000" />
+      <workItem from="1762090190544" duration="1201000" />
     </task>
     <servers />
   </component>

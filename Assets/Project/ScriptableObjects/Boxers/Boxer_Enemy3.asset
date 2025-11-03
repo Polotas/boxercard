@@ -21,6 +21,8 @@ MonoBehaviour:
   - Jab
   - Jab
   - Jab
+  - Jab
+  - Hoock
   - Hoock
   - Hoock
   - Hoock
@@ -37,20 +39,17 @@ MonoBehaviour:
   - Flurry
   - Flurry
   - Finisher
-  - Dodge
-  - Dodge
+  - Small Health
+  - Health
+  - Big Health
   - Block
   - Block
   - Block
   - S.Block
-  - Small Health
-  - Health
+  - S.Block
+  - Dodge
+  - Dodge
   - Extra Cards
-  - Focus
   - Adrenaline Rush
-  - Stun
   - Break Guard
   - Overcharge
-  - Mirror Guard
-  - Precision
-  - Second Wind

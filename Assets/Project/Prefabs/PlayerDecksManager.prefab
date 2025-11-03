@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3712239821748395228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9122395172301778491}
+  - component: {fileID: 3920827056965976258}
+  m_Layer: 0
+  m_Name: PlayerDecksManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9122395172301778491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712239821748395228}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3370.9404, y: 422.16882, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3920827056965976258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3712239821748395228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56f6c566c533dc438f57998c7d74790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDecksManager
+  playerBoxers:
+  - id: boxer01
+    displayName: MATT
+    visual: {fileID: 2093567087635455240, guid: ed31b2a10437399419aa4bb1a01a0ffe, type: 3}
+    visualVictory: {fileID: -4403758066796133435, guid: ddde1c6e2fb16c444bd7ed1145e54dd3, type: 3}
+    visualLose: {fileID: 4945544210645434484, guid: dc4e9163ccf232a499d10e158c0f7678, type: 3}
+  - id: boxer02
+    displayName: MARIA
+    visual: {fileID: -8078224510179747336, guid: 67a33ac80a64915419913097b2f32a47, type: 3}
+    visualVictory: {fileID: 4621786207936274083, guid: 40a85cfff0a447b4c9f1ee8f283ec729, type: 3}
+    visualLose: {fileID: 6450820471795987887, guid: ee648cd209decb34fb52c0388eeeb463, type: 3}

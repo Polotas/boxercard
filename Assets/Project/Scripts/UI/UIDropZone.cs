@@ -482,7 +482,7 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         
         // Cada hit do Flurry causa 3 de dano
-        int flurryDamage = 3;
+        int flurryDamage = attackCard.power;
         
         // Aplica buffs apenas no primeiro hit
         if (hitNumber == 1)
@@ -517,6 +517,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             else
             {
                 battleManager.battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
+                // Somar dano causado ao adversário no GameManager
+                GameManager.Instance.currentDamageAdversary += flurryDamage;
             }
             
             // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
@@ -717,6 +719,8 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             else
             {
                 battleManager.battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
+                // Somar dano causado ao adversário no GameManager
+                GameManager.Instance.currentDamageAdversary += remainingDamage;
             }
             
             // Marca que o alvo recebeu dano (para Counter Punch no próximo turno dele)
@@ -923,6 +927,12 @@ public class UIDropZone : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         
         Debug.Log($"Carta de cura {card.data.displayName} foi consumida e removida");
+    }
+    
+    // Método público para ser chamado pelo BattleManager
+    public IEnumerator DestroyDefenseCardWithAnimation(CardController defenseCard, UIDropZone defenseZone)
+    {
+        yield return StartCoroutine(DestroyDefenseCard(defenseCard, defenseZone));
     }
     
     private IEnumerator DestroyDefenseCard(CardController defenseCard, UIDropZone defenseZone)

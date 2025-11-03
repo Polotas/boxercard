@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -163,6 +164,9 @@ public class BattleManager : MonoBehaviour
         state.attackPowerBonus = 0;
         state.precisionIgnoreFirstDefenseThisTurn = false;
         state.overchargeSelfDamagePending = Mathf.Max(0, state.overchargeSelfDamagePending); // mantém até cleanup
+    
+        if(!state.stunnedNextTurn)
+            DoStun(isPlayer,false);
 
         // Stun: perder o turno
         if (state.stunnedNextTurn)
@@ -170,7 +174,7 @@ public class BattleManager : MonoBehaviour
             state.stunnedNextTurn = false;
             battleEvents.OnBattleMessage?.Invoke(isPlayer ? "Jogador está atordoado e perde o turno!" : "Adversário está atordoado e perde o turno!");
             // Tremor no início do turno em que o lado está atordoado
-            DoStun(isPlayer,false);
+            //DoStun(isPlayer,false);
             yield return new WaitForSeconds(phaseTransitionDelay);
             yield break;
         }
@@ -441,6 +445,8 @@ public class BattleManager : MonoBehaviour
         else
         {
             battleEvents.OnAdversaryHealthChanged?.Invoke(target.health);
+            // Somar dano causado ao adversário no GameManager
+            GameManager.Instance.currentDamageAdversary += damage;
         }
         
         Debug.Log($"{target.name} recebeu {damage} de dano. Vida restante: {target.health}");
@@ -468,17 +474,14 @@ public class BattleManager : MonoBehaviour
     {
         // Cast para o tipo correto para acessar as propriedades específicas
         UIDropZone[] defenses = null;
-        UIDropZone corner = null;
         
         if (controller == playerController)
         {
             defenses = playerController.defenses;
-            corner = playerController.corner;
         }
         else if (controller == adversaryController)
         {
             defenses = adversaryController.defenses;
-            corner = adversaryController.corner;
         }
         
         if (defenses != null)
@@ -502,25 +505,6 @@ public class BattleManager : MonoBehaviour
                         battleEvents.OnAdversaryHealthChanged?.Invoke(controller.health);
                     }
                 }
-            }
-        }
-        
-        // Verificar carta de cura no corner também
-        if (corner != null && corner.currentCardController != null && 
-            corner.currentCardController.data.type == CardType.Health)
-        {
-            int healing = corner.currentCardController.power;
-            controller.health = Mathf.Min(100, controller.health + healing);
-            
-            battleEvents.OnBattleMessage?.Invoke($"{controller.name} se curou {healing} pontos de vida!");
-            
-            if (controller == playerController)
-            {
-                battleEvents.OnPlayerHealthChanged?.Invoke(controller.health);
-            }
-            else
-            {
-                battleEvents.OnAdversaryHealthChanged?.Invoke(controller.health);
             }
         }
     }
@@ -610,7 +594,7 @@ public class BattleManager : MonoBehaviour
     {
         // Implementação: destrói TODAS as defesas do oponente
         DeckController target = isPlayer ? (DeckController)adversaryController : (DeckController)playerController;
-        DestroyAllDefenses(target);
+        StartCoroutine(DestroyAllDefensesWithAnimation(target));
     }
 
     // ===== Novos utilitários/estados =====
@@ -653,7 +637,7 @@ public class BattleManager : MonoBehaviour
     public void ApplyBreakGuardToOpponent(bool casterIsPlayer)
     {
         DeckController target = casterIsPlayer ? (DeckController)adversaryController : (DeckController)playerController;
-        DestroyAllDefenses(target);
+        StartCoroutine(DestroyAllDefensesWithAnimation(target));
     }
 
     public void ApplyOvercharge(bool isPlayer)
@@ -724,32 +708,62 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
-    private void DestroyAllDefenses(DeckController target)
+    private IEnumerator DestroyAllDefensesWithAnimation(DeckController target)
     {
         UIDropZone[] targetDefenses = null;
-        if (target == playerController) targetDefenses = playerController.defenses; else if (target == adversaryController) targetDefenses = adversaryController.defenses;
-        if (targetDefenses == null) return;
+        if (target == playerController) 
+            targetDefenses = playerController.defenses; 
+        else if (target == adversaryController) 
+            targetDefenses = adversaryController.defenses;
+            
+        if (targetDefenses == null) yield break;
+        
+        battleEvents.OnBattleMessage?.Invoke($"Break Guard: Destruindo todas as defesas de {target.name}!");
+        yield return new WaitForSeconds(0.5f);
+        
+        // Coletar todas as cartas de defesa para destruir
+        List<(CardController card, UIDropZone zone)> defensesToDestroy = new List<(CardController, UIDropZone)>();
+        
         foreach (var dz in targetDefenses)
         {
             if (dz != null && dz.currentCardController != null && dz.currentCardController.data.type == CardType.Defense)
             {
-                // reutiliza rotina de destruição da UIDropZone (se existir)
-                var card = dz.currentCardController;
-                dz.currentCardController = null;
-                dz.currentUIDragHandler = null;
-                if (card != null) Destroy(card.gameObject);
+                defensesToDestroy.Add((dz.currentCardController, dz));
             }
         }
-        battleEvents.OnBattleMessage?.Invoke($"Todas as defesas de {target.name} foram destruídas!");
+        
+        // Destruir cada carta com animação
+        foreach (var (card, zone) in defensesToDestroy)
+        {
+            yield return StartCoroutine(zone.DestroyDefenseCardWithAnimation(card, zone));
+            yield return new WaitForSeconds(0.2f); // Pequena pausa entre cada destruição
+        }
+        
+        if (defensesToDestroy.Count > 0)
+        {
+            battleEvents.OnBattleMessage?.Invoke($"Todas as {defensesToDestroy.Count} defesas foram destruídas!");
+        }
     }
 
     private void ApplyEndOfTurnEffects(DeckController controller, SideState state)
     {
         if (state.overchargeSelfDamagePending > 0)
         {
-            controller.health = Mathf.Max(0, controller.health - state.overchargeSelfDamagePending);
-            if (controller == playerController) battleEvents.OnPlayerHealthChanged?.Invoke(controller.health); else battleEvents.OnAdversaryHealthChanged?.Invoke(controller.health);
-            battleEvents.OnBattleMessage?.Invoke($"Overcharge: {controller.name} sofreu {state.overchargeSelfDamagePending} de dano no fim do turno");
+            int damage = state.overchargeSelfDamagePending;
+            controller.health = Mathf.Max(0, controller.health - damage);
+            
+            if (controller == playerController)
+            {
+                battleEvents.OnPlayerHealthChanged?.Invoke(controller.health);
+            }
+            else
+            {
+                battleEvents.OnAdversaryHealthChanged?.Invoke(controller.health);
+                // Somar dano causado ao adversário no GameManager (mesmo que seja auto-dano)
+                GameManager.Instance.currentDamageAdversary += damage;
+            }
+            
+            battleEvents.OnBattleMessage?.Invoke($"Overcharge: {controller.name} sofreu {damage} de dano no fim do turno");
             state.overchargeSelfDamagePending = 0;
         }
     }
@@ -785,3 +799,4 @@ public class BattleManager : MonoBehaviour
         Debug.Log($"Valores originais restaurados em {cardsInHand.Count} cartas na mão");
     }
 }
+

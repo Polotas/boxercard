@@ -29,22 +29,17 @@ MonoBehaviour:
   - Upper
   - Upper
   - Cross
+  - Cross
   - Counter Punch
-  - Feint
   - Flurry
   - Small Health
   - Small Health
   - Health
-  - Big Health
+  - Block
+  - Block
+  - Block
+  - S.Block
+  - S.Block
+  - S.Block
   - Dodge
-  - Dodge
-  - Block
-  - Block
-  - Block
-  - S.Block
-  - S.Block
-  - S.Block
   - Extra Cards
-  - Focus
-  - Shield
-  - Precision

@@ -21,6 +21,7 @@ MonoBehaviour:
   - Jab
   - Jab
   - Jab
+  - Jab
   - Hoock
   - Hoock
   - Hoock
@@ -35,16 +36,13 @@ MonoBehaviour:
   - Counter Punch
   - Flurry
   - Flurry
-  - Feint
-  - Feint
-  - Finisher
-  - Dodge
-  - Dodge
+  - Small Health
+  - Health
   - Block
   - Block
   - Block
   - S.Block
-  - Health
+  - S.Block
+  - Dodge
+  - Dodge
   - Extra Cards
-  - Focus
-  - Adrenaline Rush

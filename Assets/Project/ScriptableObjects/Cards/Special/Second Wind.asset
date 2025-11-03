@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Second Wind
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   id: Second Wind
-  maxCards: 1
+  maxCards: 2
   displayName: Second Wind
   description: Heal 25% HP and draw 1 card.
   type: 3
-  special: 12
+  special: 11
   visual: {fileID: 21300000, guid: 1488494e210d6da43a843f2b158ca9a3, type: 3}
   power: 0
   defense: 0

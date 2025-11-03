@@ -8,7 +8,6 @@ using DG.Tweening;
 public class AdversaryController : DeckController
 {
     public UIDropZone[] defenses;
-    public UIDropZone corner;
     public UIDropZone attackTable; // Mesa onde cartas de ataque e cura são colocadas
     public FanLayout fanLayout;
     public Canvas canvas;
@@ -81,13 +80,12 @@ public class AdversaryController : DeckController
 
     private IEnumerator PlaceCardStrategically(CardController cardToPlace)
     {
-        bool playerHasAttack = HasPlayerAttackInCorner();
         var rectTransformCard = cardToPlace.GetComponent<RectTransform>();
         fanLayout.RemoveCard(rectTransformCard,cardToPlace);
         
         switch (cardToPlace.data.type)
         {
-            case CardType.Defense when playerHasAttack:
+            case CardType.Defense:
                 yield return StartCoroutine(PlaceDefenseCard(cardToPlace));
                 break;
             case CardType.Attack:
@@ -95,6 +93,9 @@ public class AdversaryController : DeckController
                 break;
             case CardType.Health:
                 yield return StartCoroutine(PlaceHealthCard(cardToPlace));
+                break;
+            case CardType.Special:
+                yield return StartCoroutine(PlaceSpecialCard(cardToPlace));
                 break;
             default:
                 yield return StartCoroutine(PlaceCardInAvailableSlot(cardToPlace));
@@ -110,16 +111,6 @@ public class AdversaryController : DeckController
         
         Debug.Log($"Adversário vida: {health}/100 ({healthPercentage:P}) - Deve usar cura: {shouldHeal}");
         return shouldHeal;
-    }
-    
-    private bool HasPlayerAttackInCorner()
-    {
-        var battleManager = FindFirstObjectByType<BattleManager>();
-        if (battleManager?.playerController?.corner?.currentCardController != null)
-        {
-            return battleManager.playerController.corner.currentCardController.data.type == CardType.Attack;
-        }
-        return false;
     }
     
     private IEnumerator PlaceDefenseCard(CardController card)
@@ -149,21 +140,25 @@ public class AdversaryController : DeckController
             yield return StartCoroutine(PlaceCardInZone(card, attackTable));
             Debug.Log($"Adversário substituiu ataque na mesa por {card.data.displayName} (mais forte)");
         }
-        else if (corner.currentCardController == null)
-        {
-            yield return StartCoroutine(PlaceCardInZone(card, corner));
-            Debug.Log($"Adversário colocou {card.data.displayName} no corner para atacar");
-        }
-        else if (corner.currentCardController != null && corner.currentCardController.power < card.power)
-        {
-            // Substituir ataque mais fraco no corner
-            yield return StartCoroutine(PlaceCardInZone(card, corner));
-            Debug.Log($"Adversário substituiu ataque no corner por {card.data.displayName} (mais forte)");
-        }
         else
         {
             // Se não há slots de ataque disponíveis, descartar a carta
-            Debug.Log($"Adversário não conseguiu colocar {card.data.displayName} - slots de ataque ocupados com cartas mais fortes");
+            Debug.Log($"Adversário não conseguiu colocar {card.data.displayName} - mesa de ataque ocupada com carta mais forte");
+            yield return StartCoroutine(DiscardCard(card));
+        }
+    }
+    
+    private IEnumerator PlaceSpecialCard(CardController card)
+    {
+        // Cartas especiais são usadas na mesa de ataque
+        if (attackTable != null && attackTable.currentCardController == null)
+        {
+            yield return StartCoroutine(PlaceCardInZone(card, attackTable));
+            Debug.Log($"Adversário colocou {card.data.displayName} (especial) na mesa");
+        }
+        else
+        {
+            Debug.Log($"Adversário não conseguiu usar {card.data.displayName} - mesa ocupada");
             yield return StartCoroutine(DiscardCard(card));
         }
     }
@@ -247,9 +242,9 @@ public class AdversaryController : DeckController
             yield break;
         }
         
-        if (corner.currentCardController == null)
+        if (card.data.type == CardType.Special)
         {
-            yield return StartCoroutine(PlaceCardInZone(card, corner));
+            yield return StartCoroutine(PlaceSpecialCard(card));
             yield break;
         }
         
@@ -311,7 +306,6 @@ public class AdversaryController : DeckController
         cardTransform.SetAsLastSibling(); // Ficar por cima de outras cartas
         
         cardTransform.position = worldPosition;
-        cardTransform.localScale = new Vector3(-1, -1, 1); // Garantir escala correta
         
         cardTransform.anchorMax = new Vector2(0.5f, 0.5f);
         cardTransform.anchorMin = new Vector2(0.5f, 0.5f);
@@ -648,7 +642,6 @@ public class AdversaryController : DeckController
     
     private bool HasPlayerAttacks(PlayerController player)
     {
-        if (player.corner.currentCardController?.data.type == CardType.Attack) return true;
         if (player.attackTable.currentCardController?.data.type == CardType.Attack) return true;
         return false;
     }
@@ -666,8 +659,6 @@ public class AdversaryController : DeckController
     private int CalculatePlayerAttackThreat(PlayerController player)
     {
         int threat = 0;
-        if (player.corner.currentCardController?.data.type == CardType.Attack)
-            threat += player.corner.currentCardController.power;
         if (player.attackTable.currentCardController?.data.type == CardType.Attack)
             threat += player.attackTable.currentCardController.power;
         return threat;
